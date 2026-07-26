@@ -33,6 +33,10 @@ All standard syntaxes can be both parsed ("from string") and displayed ("to stri
 There is _no guarantee_ that all non-standard syntaxes can be parsed if they can be
 displayed (namely, the `IP6` syntax).
 
+Unit test coverage is close to 100% of all lines and functions, and about 70%
+of branches. Some of the branches not tested are trivial error handling
+branches or even thought to be unreachable.
+
 ## Usage
 
 TODO: Fill in
@@ -58,11 +62,9 @@ counts as "not written by AI" overall.
 
 - [ ] Formatting
 - [ ] `index.mts`
-- [ ] AI / LLM statement
 - [ ] Make `fromHex` return `null` on error?
 - [ ] Convert Rust documentation comments to JSDoc
 - [ ] Make IPv4 or IPv6 a `Uint8Array`
-- [ ] Break from digits iteration on any nybble above 9
 
 ## To Do (Future)
 
