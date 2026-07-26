@@ -13,151 +13,176 @@ export type Ipv6Address = [
     number, number, number, number,
 ];
 
-/// Authority and Format Identifier (AFI): part of an NSAP address
-/// 8-bit unsigned integer
+/**
+ * Authority and Format Identifier (AFI): part of an NSAP address
+ * 8-bit unsigned integer
+ */
 export type AFI = number;
 
-/// Network identifier, encoded as Binary-Coded Decimal (BCD), per IETF RFC 1277
-/// 8-bit unsigned integer
+/**
+ * Network identifier, encoded as Binary-Coded Decimal (BCD), per IETF RFC 1277
+ * 8-bit unsigned integer
+ */
 export type Rfc1277NetworkId = number;
 
-/// Transport set, per IETF RFC 1277
-/// 16-bit unsigned integer
+/**
+ * Transport set, per IETF RFC 1277
+ * 16-bit unsigned integer
+ */
 export type Rfc1277TransportSet = number;
 
 export type NetworkSocketId = number;
 
-/// Socket information, per IETF RFC 1277
+/** Socket information, per IETF RFC 1277 */
 export type Rfc1277SocketInfo = [Rfc1277NetworkId, Ipv4Address, NetworkSocketId, Rfc1277TransportSet];
 
-/// X.213 NSAP Domain-Specific Part Syntax
+// TODO: Move variant docs to the type definition.
+/** X.213 NSAP Domain-Specific Part Syntax */
 export type DSPSyntax =
-    /// Binary-Coded Decimal (BCD) with 0b1111 used as padding to produce an
-    /// integral number of octets
+    /**
+     * Binary-Coded Decimal (BCD) with 0b1111 used as padding to produce an
+     * integral number of octets
+     */
     | "decimal"
-    /// Opaque binary encoding
+    /** Opaque binary encoding */
     | "binary"
-    /// ISO/IEC 646 characters, which is basically ASCII
+    /** ISO/IEC 646 characters, which is basically ASCII */
     | "iso646"
-    /// Characters from a national character set
+    /** Characters from a national character set */
     | "national"
     ;
 
 
-/// X.213 NSAP network address type
+// TODO: Move variant docs to the type definition.
+/** X.213 NSAP network address type */
 export type X213NetworkAddressType =
-    /// IDI based on ITU-T Recommendation X.121 address for use in X.25 Networks
-    ///
-    /// Quoting ITU-T Recommendation X.213 (2001):
-    ///
-    /// > The IDI consists of an international public data network number of up
-    /// > to 14 digits allocated according to ITU-T Rec. X.121, commencing with
-    /// > the Data Network Identification Code. The full X.121 number
-    /// > identifies an authority responsible for allocating and assigning
-    /// > values of the DSP.
-    ///
-    /// See: <https://www.itu.int/rec/T-REC-X.121-200010-I/en>
+    /**
+     * IDI based on ITU-T Recommendation X.121 address for use in X.25 Networks
+     *
+     * Quoting ITU-T Recommendation X.213 (2001):
+     *
+     * > The IDI consists of an international public data network number of up
+     * > to 14 digits allocated according to ITU-T Rec. X.121, commencing with
+     * > the Data Network Identification Code. The full X.121 number
+     * > identifies an authority responsible for allocating and assigning
+     * > values of the DSP.
+     *
+     * See: <https://www.itu.int/rec/T-REC-X.121-200010-I/en>
+     */
     | "x121"
-    /// IDI based on International Organization for Standardization (ISO) Data Country Code (DCC)
-    ///
-    /// Quoting / Paraphrasing ITU-T Recommendation X.213 (2001):
-    ///
-    /// The IDI consists of a fixed length 3-digit numeric code allocated
-    /// according to ISO 3166-1. The DSP is allocated and assigned by the ISO
-    /// member body or sponsored organization to which the ISO DCC value has
-    /// been assigned, or by an organization designated by the holder of the
-    /// ISO DCC value to carry out this responsibility.
-    ///
-    /// See: <https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes>
+    /**
+     * IDI based on International Organization for Standardization (ISO) Data Country Code (DCC)
+     *
+     * Quoting / Paraphrasing ITU-T Recommendation X.213 (2001):
+     *
+     * The IDI consists of a fixed length 3-digit numeric code allocated
+     * according to ISO 3166-1. The DSP is allocated and assigned by the ISO
+     * member body or sponsored organization to which the ISO DCC value has
+     * been assigned, or by an organization designated by the holder of the
+     * ISO DCC value to carry out this responsibility.
+     *
+     * See: <https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes>
+     */
     | "iso_dcc"
-    /// IDI based on ITU-T Recommendation F.69 address for use in Telex
-    ///
-    /// Quoting ITU-T Recommendation X.213 (2001):
-    ///
-    /// > The IDI consists of a telex number of up to 8 digits, allocated
-    /// > according to ITU-T Rec. F.69, commencing with a 2- or
-    /// > 3-digit destination code. The full telex number identifies an
-    /// > authority responsible for allocating and assigning values of the DSP.
-    ///
-    /// A particular IDI for this network type is used to provide a namespace
-    /// for IP networking within NSAP addressing: `00728722`. Its usage is
-    /// described in IETF RFC
-    ///
-    /// See: <https://www.itu.int/rec/T-REC-F.69-199406-I/en>
+    /**
+     * IDI based on ITU-T Recommendation F.69 address for use in Telex
+     *
+     * Quoting ITU-T Recommendation X.213 (2001):
+     *
+     * > The IDI consists of a telex number of up to 8 digits, allocated
+     * > according to ITU-T Rec. F.69, commencing with a 2- or
+     * > 3-digit destination code. The full telex number identifies an
+     * > authority responsible for allocating and assigning values of the DSP.
+     *
+     * A particular IDI for this network type is used to provide a namespace
+     * for IP networking within NSAP addressing: `00728722`. Its usage is
+     * described in IETF RFC
+     *
+     * See: <https://www.itu.int/rec/T-REC-F.69-199406-I/en>
+     */
     | "f69"
-    /// IDI based on ITU-T Rec. E.163 address for use in the PSTN
-    ///
-    /// This is a phone number. This network type was deprecated at or before
-    /// 2001 and you should use E.164 addressing instead.
-    ///
-    /// See: <https://www.itu.int/rec/T-REC-E.163/en>
+    /**
+     * IDI based on ITU-T Rec. E.163 address for use in the PSTN
+     *
+     * This is a phone number. This network type was deprecated at or before
+     * 2001 and you should use E.164 addressing instead.
+     *
+     * See: <https://www.itu.int/rec/T-REC-E.163/en>
+     */
     | "e163"
-    /// IDI based on ITU-T Rec. E.164 address for use in the ISDN
-    ///
-    /// This is a phone number.
-    ///
-    /// Quoting ITU-T Recommendation X.213 (2001):
-    ///
-    /// > The IDI consists of an international public telecommunication
-    /// > numbering plan number of up to 15 digits allocated
-    /// > according to ITU-T Rec. E.164, commencing with the E.164
-    /// > international number country code. The full E.164 number
-    /// > identifies an authority responsible for allocating and assigning
-    /// > values of the DSP.
-    ///
-    /// See: <https://www.itu.int/rec/T-REC-E.164/en>
+    /**
+     * IDI based on ITU-T Rec. E.164 address for use in the ISDN
+     *
+     * This is a phone number.
+     *
+     * Quoting ITU-T Recommendation X.213 (2001):
+     *
+     * > The IDI consists of an international public telecommunication
+     * > numbering plan number of up to 15 digits allocated
+     * > according to ITU-T Rec. E.164, commencing with the E.164
+     * > international number country code. The full E.164 number
+     * > identifies an authority responsible for allocating and assigning
+     * > values of the DSP.
+     *
+     * See: <https://www.itu.int/rec/T-REC-E.164/en>
+     */
     | "e164"
-    /// IDI is an assigned ISO/IEC 6523-1 International Code Designator (ICD)
+    /** IDI is an assigned ISO/IEC 6523-1 International Code Designator (ICD) */
     | "iso_6523_icd"
-    /// IPv4 or IPv6 address, depending on the IDI, which is assigned by IANA
-    ///
-    /// For either version, the IP address is encoded in binary format, and
-    /// padded with zeroes to be exactly 20 bytes in total, after the AFI and
-    /// IDI (which identifies the version).
-    ///
-    /// See: <https://www.rfc-editor.org/rfc/rfc4548.html>
+    /**
+     * IPv4 or IPv6 address, depending on the IDI, which is assigned by IANA
+     *
+     * For either version, the IP address is encoded in binary format, and
+     * padded with zeroes to be exactly 20 bytes in total, after the AFI and
+     * IDI (which identifies the version).
+     *
+     * See: <https://www.rfc-editor.org/rfc/rfc4548.html>
+     */
     | "iana_icp"
-    /// International Network Designator (IND)
+    /** International Network Designator (IND) */
     | "itu_t_ind"
-    /// Locally-assigned DSP
+    /** Locally-assigned DSP */
     | "local"
-    /// Special URL encoding defined (without a name) in ITU-T Rec. X.519.
-    ///
-    /// See: <https://www.itu.int/rec/T-REC-X.519>, Section 11.4
+    /**
+     * Special URL encoding defined (without a name) in ITU-T Rec. X.519.
+     *
+     * See: <https://www.itu.int/rec/T-REC-X.519>, Section 11.4
+     */
     | "url"
     ;
 
-/// ITU-T Recommendation X.213 NSAP Address
-///
-/// This is composed of three parts, encoded in this order:
-///
-/// - Authority and Format Identifier (AFI): always a single byte, which
-///   identifies the network type and the syntax of the encoding that follows
-/// - Initial Domain Identifier (IDI): the authority for allocating further
-///   address identifiers, which is always encoded as binary-coded decimal,
-///   and padded with either 0x0 or 0x1 depending on whether leading zeroes are
-///   significant or not until the maximum length is reached in digits.
-/// - Domain-Specific Part (DSP): the remainder of the information that
-///   completes the address and is allocated by the authority identified by the
-///   IDI. It can have four abstract syntaxes: BCD, binary, ISO/IEC 646 string,
-///   and a national character encoding.
-///
-/// Together, the AFI and IDI are referred to as the Initial Domain Part (IDP).
-///
-/// This type does not implement `PartialEq`, `Eq`, or `Hash`, because:
-///
-/// 1. Unrecognized encodings could mean that two values cannot be compared for
-///    equality because their semantics are unknown.
-/// 2. Even among recognized encodings, it is not clear whether or not the
-///    decimal encoding should always be considered equal to the binary
-///    encoding.
-/// 3. The semantics of the DSP encodings seems to be undefined for most AFIs.
-///
-/// A simple `Eq` or `Hash` implementation could just use the raw octets, but
-/// this could contradict cases where two different encoding should be treated
-/// as equal. Letting the caller explicitly hash or compare the octets is more
-/// clear as to what the underlying behavior is.
-///
+/**
+ * ITU-T Recommendation X.213 NSAP Address
+ *
+ * This is composed of three parts, encoded in this order:
+ *
+ * - Authority and Format Identifier (AFI): always a single byte, which
+ *   identifies the network type and the syntax of the encoding that follows
+ * - Initial Domain Identifier (IDI): the authority for allocating further
+ *   address identifiers, which is always encoded as binary-coded decimal,
+ *   and padded with either 0x0 or 0x1 depending on whether leading zeroes are
+ *   significant or not until the maximum length is reached in digits.
+ * - Domain-Specific Part (DSP): the remainder of the information that
+ *   completes the address and is allocated by the authority identified by the
+ *   IDI. It can have four abstract syntaxes: BCD, binary, ISO/IEC 646 string,
+ *   and a national character encoding.
+ *
+ * Together, the AFI and IDI are referred to as the Initial Domain Part (IDP).
+ *
+ * This type does not implement `PartialEq`, `Eq`, or `Hash`, because:
+ *
+ * 1. Unrecognized encodings could mean that two values cannot be compared for
+ *    equality because their semantics are unknown.
+ * 2. Even among recognized encodings, it is not clear whether or not the
+ *    decimal encoding should always be considered equal to the binary
+ *    encoding.
+ * 3. The semantics of the DSP encodings seems to be undefined for most AFIs.
+ *
+ * A simple `Eq` or `Hash` implementation could just use the raw octets, but
+ * this could contradict cases where two different encoding should be treated
+ * as equal. Letting the caller explicitly hash or compare the octets is more
+ * clear as to what the underlying behavior is.
+ */
 export class X213NetworkAddress {
     public bytes: Uint8Array;
     constructor(bytes: Uint8Array) {
@@ -177,21 +202,23 @@ export class X213NetworkAddress {
         return this.bytes[0] ?? -1;
     }
 
-    /// Get network type info for this NSAP address
+    /** Get network type info for this NSAP address */
     public get_network_type_info(): X213NetworkAddressInfo | undefined {
         return get_nsap_address_schema(this.afi());
     }
 
-    /// Get the network type for this NSAP address
+    /** Get the network type for this NSAP address */
     public get_network_type(): X213NetworkAddressType | undefined {
         return afi_to_network_type(this.afi());
     }
 
-    /// Iterate over the IDI digits for this NSAP address
-    ///
-    /// Returns `None` if the AFI is unrecognized, and therefore, that the
-    /// NSAP address cannot be parsed, since the end of the IDI cannot be
-    /// determined.
+    /**
+     * Iterate over the IDI digits for this NSAP address
+     *
+     * Returns `None` if the AFI is unrecognized, and therefore, that the
+     * NSAP address cannot be parsed, since the end of the IDI cannot be
+     * determined.
+     */
     public idi_digits(): IterableIterator<number, void> | undefined {
         const addr_type_info = get_nsap_address_schema(this.afi());
         if (!addr_type_info) {
@@ -212,11 +239,13 @@ export class X213NetworkAddress {
         );
     }
 
-    /// Iterate over the IDI digits for this NSAP address, if the DSP is in decimal
-    ///
-    /// Returns `None` if the AFI is unrecognized, and therefore, that the
-    /// NSAP address cannot be parsed, since the end of the IDI cannot be
-    /// determined. Also returns `None` if the DSP syntax is not decimal.
+    /**
+     * Iterate over the IDI digits for this NSAP address, if the DSP is in decimal
+     *
+     * Returns `None` if the AFI is unrecognized, and therefore, that the
+     * NSAP address cannot be parsed, since the end of the IDI cannot be
+     * determined. Also returns `None` if the DSP syntax is not decimal.
+     */
     public dsp_digits(): IterableIterator<number, void> | undefined {
         const addr_type_info = get_nsap_address_schema(this.afi());
         if (!addr_type_info) {
@@ -243,9 +272,11 @@ export class X213NetworkAddress {
         );
     }
 
-    /// Get the encoded URL
-    ///
-    /// This returns `None` if this NSAP does not encode a URL
+    /**
+     * Get the encoded URL
+     *
+     * This returns `None` if this NSAP does not encode a URL
+     */
     public get_url(): string | undefined {
         const octets = this.get_octets();
         // It couldn't be a valid URL in two characters, AFAIK.
@@ -255,12 +286,14 @@ export class X213NetworkAddress {
         return new TextDecoder().decode(octets.slice(3));
     }
 
-    /// Get the encoded IP address
-    ///
-    /// This only returns an IP address for IANA ICP-based NSAP addresses
-    ///
-    /// This returns `None` if this NSAP does not encode an IP address
-    /// See: <https://www.rfc-editor.org/rfc/rfc4548.html>
+    /**
+     * Get the encoded IP address
+     *
+     * This only returns an IP address for IANA ICP-based NSAP addresses
+     *
+     * This returns `None` if this NSAP does not encode an IP address
+     * See: <https://www.rfc-editor.org/rfc/rfc4548.html>
+     */
     public get_ip(): Ipv4Address | Ipv6Address | undefined {
         const octets = this.get_octets();
         // FIXME: The Rust crate does not check for 20-byte length.
@@ -283,13 +316,15 @@ export class X213NetworkAddress {
         }
     }
 
-    /// Get the RFC 1277 socket address info
-    ///
-    /// Specifically, if this returns `Some(_)`, it contains a tuple of the
-    /// IP network, the socket address, and optionally, the transport-set, as
-    /// defined in IETF RFC 1277, in that order.
-    ///
-    /// This returns `None` if this NSAP does not encode an ITOT socket address
+    /**
+     * Get the RFC 1277 socket address info
+     *
+     * Specifically, if this returns `Some(_)`, it contains a tuple of the
+     * IP network, the socket address, and optionally, the transport-set, as
+     * defined in IETF RFC 1277, in that order.
+     *
+     * This returns `None` if this NSAP does not encode an ITOT socket address
+     */
     public get_rfc1277_socket(): Rfc1277SocketInfo | undefined {
         const octets = this.get_octets();
         const prefix = octets.subarray(0, RFC_1277_PREFIX.length);
@@ -349,7 +384,7 @@ export class X213NetworkAddress {
         return parse_nsap(str);
     }
 
-    /// Create a new IANA ICP NSAP address from an IP address
+    /** Create a new IANA ICP NSAP address from an IP address */
     public static from_ip(ip: Ipv4Address | Ipv6Address): X213NetworkAddress | RFC1278ParseError {
         // IANA ICP NSAP addresses are always 20 bytes
         const out = new Uint8Array(20);
@@ -360,12 +395,12 @@ export class X213NetworkAddress {
         return new X213NetworkAddress(out);
     }
 
-    /// Create a new IANA ICP NSAP address from an IPv4 address
+    /** Create a new IANA ICP NSAP address from an IPv4 address */
     public static from_ipv4(ip: Ipv4Address): X213NetworkAddress | RFC1278ParseError {
         return X213NetworkAddress.from_ip(ip);
     }
 
-    /// Create a new IANA ICP NSAP address from an IPv6 address
+    /** Create a new IANA ICP NSAP address from an IPv6 address */
     public static from_ipv6(ip: Ipv6Address): X213NetworkAddress | RFC1278ParseError {
         return X213NetworkAddress.from_ip(ip);
     }
@@ -380,19 +415,21 @@ export class X213NetworkAddress {
         return new X213NetworkAddress(out);
     }
 
-    /// Create a new X.519 ITOT URL NSAP address from a URL
+    /** Create a new X.519 ITOT URL NSAP address from a URL */
     public static from_itot_url(url: string): X213NetworkAddress | RFC1278ParseError {
         return X213NetworkAddress.from_url(url, 0);
     }
 
-    /// Create a new X.519 Non-OSI (LDAP, IDM, etc.) URL NSAP address from a URL
+    /** Create a new X.519 Non-OSI (LDAP, IDM, etc.) URL NSAP address from a URL */
     public static from_non_osi_url(url: string): X213NetworkAddress | RFC1278ParseError {
         return X213NetworkAddress.from_url(url, 1);
     }
 
-    /// Create an ITOT NSAP address from a socket address and optional transport set
-    ///
-    /// Note that this only supports IPv4 due to the encoding.
+    /**
+     * Create an ITOT NSAP address from a socket address and optional transport set
+     *
+     * Note that this only supports IPv4 due to the encoding.
+     */
     public static from_socket_addr_v4(
         network: number,
         ip: Ipv4Address,
@@ -430,14 +467,16 @@ export class X213NetworkAddress {
         return new X213NetworkAddress(out);
     }
 
-    /// Convert to a `String` using the `NS+<hex>` syntax
-    ///
-    /// This is desirable for portability / interoperability: the `NS+<hex>`
-    /// syntax is the easiest display syntax to parse and leaves no ambiguity of
-    /// encoding. This is a great choice if you are exporting an NSAP address in
-    /// string format for use in other systems.
-    ///
-    /// The output looks like `NS+A433BB93C1`.
+    /**
+     * Convert to a `String` using the `NS+<hex>` syntax
+     *
+     * This is desirable for portability / interoperability: the `NS+<hex>`
+     * syntax is the easiest display syntax to parse and leaves no ambiguity of
+     * encoding. This is a great choice if you are exporting an NSAP address in
+     * string format for use in other systems.
+     *
+     * The output looks like `NS+A433BB93C1`.
+     */
     public to_ns_string(): string {
         const hex = Array.from(this.get_octets())
             .map((byte) => byte.toString(16).toUpperCase().padStart(2, "0"))
@@ -446,9 +485,12 @@ export class X213NetworkAddress {
         return `NS+${hex}`;
     }
 
+    // TODO: JSDoc
     public toString(): string {
         return fmt_naddr(this, false);
     }
+
+    // TODO: isEqualTo() (this can be trivial)
 }
 
 export default X213NetworkAddress;

@@ -1,3 +1,4 @@
+// TODO: Almost every function in this file needs JSDoc.
 import { type AFI, type DSPSyntax, X213NetworkAddress, type Ipv4Address } from "./types.mjs";
 import {
     ECMA_117_DECIMAL_STR, X25_PREFIX_STR,
@@ -21,7 +22,7 @@ import { BCDBuffer } from "./bcd.mjs";
 
 type ParseResult = X213NetworkAddress | RFC1278ParseError;
 
-/// Validate that string is a digitstring and shorter than `max_len`
+/** Validate that string is a digitstring and shorter than `max_len` */
 function validate_digitstring(s: string, max_len: number): boolean {
     return (
         (s.length <= max_len)
@@ -54,7 +55,7 @@ const hexCharToValue = (code: number): number => {
     return -1; // Invalid hex char
 };
 
-/// Decode an AFI from a `str`
+/** Decode an AFI from a `str` */
 function decode_afi_from_str(s: string): number | null {
     if (s.length !== 2) {
         return null;
@@ -151,7 +152,7 @@ const naddr_str_to_afi_map = new Map<string, AFI>([
     [ (naddr_str_key(AFI_STR_LOCAL, "national", true)), AFI_LOCAL_NATIONAL ],
 ]);
 
-/// Translate an AFI string, such as "X121" to an AFI value
+/** Translate an AFI string, such as "X121" to an AFI value */
 function naddr_str_to_afi(
     s: string,
     leading0: boolean,
@@ -194,7 +195,7 @@ function parse_url(idi: string, url: string): ParseResult {
     return new X213NetworkAddress(out);
 }
 
-/// Parse the part that comes after "NS+"
+/** Parse the part that comes after "NS+" */
 function parse_ns_dsp(ns: string): ParseResult {
     return new X213NetworkAddress(fromHex(ns));
 }

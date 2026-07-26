@@ -1,6 +1,4 @@
-//! Miscellaneous utilties
-
-/// Convert a u8 to decimal ASCII digits
+/** Convert a u8 to decimal ASCII digits */
 export function u8_to_decimal_bytes(n: number): Uint8Array {
     let hundreds = n / 100;
     n %= 100;
@@ -13,7 +11,7 @@ export function u8_to_decimal_bytes(n: number): Uint8Array {
     ]);
 }
 
-/// Convert a u16 to decimal ASCII digits
+/** Convert a u16 to decimal ASCII digits */
 export function u16_to_decimal_bytes(n: number): Uint8Array {
     let ten_thousands = (n / 10000);
     n %= 10000;
@@ -32,6 +30,7 @@ export function u16_to_decimal_bytes(n: number): Uint8Array {
     ]);
 }
 
+// TODO: JSDoc
 // It is absolutely fucking inexcusable that JavaScript does not have a built-in for this.
 // Just when I think Javascript is actually a decent language, I am reminded of things like this.
 export function uint8ArrayCompare(

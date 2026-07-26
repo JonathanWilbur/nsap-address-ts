@@ -1,4 +1,3 @@
-//! Code to implement std::fmt::Display for NSAP addresses
 import {
     AFI_STR_DCC, AFI_STR_ICD, AFI_STR_ICP, AFI_STR_IND, AFI_STR_ISDN, AFI_STR_LOCAL, AFI_STR_PSTN,
     AFI_STR_TELEX, AFI_STR_URL, AFI_STR_X121, ITOT_OVER_IPV4_DEFAULT_PORT,
@@ -29,12 +28,12 @@ const naddr_network_type_to_str_map = new Map<X213NetworkAddressType, string>([
     ["url", AFI_STR_URL],
 ]);
 
-/// Convert the network type to a string
+/** Convert the network type to a string */
 export function naddr_network_type_to_str(nt: X213NetworkAddressType): string | undefined {
-    return naddr_network_type_to_str_map.get(nt) ?? "unknown";
+    return naddr_network_type_to_str_map.get(nt);
 }
 
-/// Decode a BCD-encoded IPv4 address. Returns `None` upon integer overflow.
+/** Decode a BCD-encoded IPv4 address. Returns `None` upon integer overflow. */
 export function ipv4_from_slice(bytes: Uint8Array): Ipv4Address | undefined {
     const byte0 = bytes[0];
     const byte1 = bytes[1];
@@ -67,12 +66,11 @@ export function ipv4_from_slice(bytes: Uint8Array): Ipv4Address | undefined {
     if (oct1 > 255 || oct2 > 255 || oct3 > 255 || oct4 > 255) {
         return undefined;
     }
-    // if (oct1 < 0 || oct2 < 0 || oct3 < 0 || oct4 < 0) {
-    //     return undefined;
-    // }
     return [oct1, oct2, oct3, oct4];
 }
 
+// TODO: JSDoc
+// TODO: Expose only_standard flag
 export function fmt_naddr(
     naddr: X213NetworkAddress,
     only_standard: boolean = false,

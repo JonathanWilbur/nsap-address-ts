@@ -1,24 +1,32 @@
-//! Binary-Coded Decimal (BCD) handling
-//!
-//! This isn't generally useful for all uses cases: this is specifically
-//! designed for X.213 NSAP addresses
+/**
+ * Binary-Coded Decimal (BCD) handling
+ *
+ * This isn't generally useful for all uses cases: this is specifically
+ * designed for X.213 NSAP addresses
+ * 
+ * @module bcd
+ */
 
-/// An ASCII digit (`0x30..=0x39`)
-///
-/// This SHOULD BE an ASCII digit, but might not be. It is on the caller to
-/// check this and determine what to do if this has a non-digit value.
+/**
+ * An ASCII digit (`0x30..=0x39`)
+ *
+ * This SHOULD BE an ASCII digit, but might not be. It is on the caller to
+ * check this and determine what to do if this has a non-digit value.
+ */
 export type ShouldBeASCIIDigit = number;
 
-/// Buffer for writing Binary-Coded Decimal (BCD)
-///
-/// Binary-Coded Decimal (BCD) is extensively used by X.213 NSAP addresses. It
-/// is always used for the Initial Domain Identifier (IDI), but is often used
-/// for the Domain Specific Part (DSP) as well.
-///
-/// This uses a fixed-length buffer of 20 bytes, because NSAP addresses are
-/// forbidden from exceeding 20 bytes, with an exception for URLs established in
-/// ITU-T Rec. X.519. Despite this one exception, no decimal encoding of an NSAP
-/// address exceeds 20 bytes.
+/**
+ * Buffer for writing Binary-Coded Decimal (BCD)
+ *
+ * Binary-Coded Decimal (BCD) is extensively used by X.213 NSAP addresses. It
+ * is always used for the Initial Domain Identifier (IDI), but is often used
+ * for the Domain Specific Part (DSP) as well.
+ *
+ * This uses a fixed-length buffer of 20 bytes, because NSAP addresses are
+ * forbidden from exceeding 20 bytes, with an exception for URLs established in
+ * ITU-T Rec. X.519. Despite this one exception, no decimal encoding of an NSAP
+ * address exceeds 20 bytes.
+ */
 export class BCDBuffer {
     bytes: Uint8Array;
     i: number;
@@ -33,18 +41,18 @@ export class BCDBuffer {
             : 0;
     }
 
-    /// Push a string of ASCII digits to the BCD buffer.
-    ///
-    /// Each character MUST return `true` from `u8::is_ascii_digit`.
+    /**
+     * Push a string of ASCII digits to the BCD buffer.
+     */
     public push_str(s: string) {
         for (let i = 0; i < s.length; i++) {
             this.push_digit_u8(s.charCodeAt(i));
         }
     }
 
-    /// Push a u8 slice of ASCII digits to the BCD buffer.
-    ///
-    /// The entire slice MUST return `true` from `u8::is_ascii_digit`.
+    /**
+     * Push a u8 slice of ASCII digits to the BCD buffer.
+     */
     public push_ascii_bytes(bytes: Uint8Array) {
         for (let i = 0; i < bytes.length; i++) {
             const byte = bytes[i]!;
@@ -52,20 +60,22 @@ export class BCDBuffer {
         }
     }
 
-    /// Push a single ASCII digit into the BCD buffer.
-    ///
-    /// `b` MUST return `true` from `u8::is_ascii_digit`.
+    /**
+     * Push a single ASCII digit into the BCD buffer.
+     */
     public push_digit_u8(b: number) {
         const nybble: number = Math.max(0, b - 0x30);
         this.push_nybble(nybble);
     }
 
-    /// Push an arbitrary nybble into the BCD buffer
-    ///
-    /// This does not check if the nybble is a binary-coded decimal.
-    /// This is particularly useful for pushing the padding nybble `0b1111`
-    /// that is used to pad an odd number of digits to an integral number of
-    /// octets.
+    /**
+     * Push an arbitrary nybble into the BCD buffer
+     *
+     * This does not check if the nybble is a binary-coded decimal.
+     * This is particularly useful for pushing the padding nybble `0b1111`
+     * that is used to pad an odd number of digits to an integral number of
+     * octets.
+     */
     public push_nybble(n: number) {
         let byte_index = this.i >> 1;
         if (typeof this.bytes[byte_index] === "undefined") {
@@ -84,12 +94,14 @@ export class BCDBuffer {
         this.i = Math.min(39, this.i);
     }
 
-    /// Push a full byte into the BCD buffer
-    ///
-    /// If the last nybble prior to pushing is unset, it stays unset at 0.
-    ///
-    /// In other words, if the buffer contains `012` and you use this function
-    /// to push `0x34`, the BCD buffer will then contain `012034`.
+    /**
+     * Push a full byte into the BCD buffer
+     *
+     * If the last nybble prior to pushing is unset, it stays unset at 0.
+     *
+     * In other words, if the buffer contains `012` and you use this function
+     * to push `0x34`, the BCD buffer will then contain `012034`.
+     */
     public push_byte(byte: number) {
         let byte_index = this.len_in_bytes();
         this.bytes[byte_index] = byte;
@@ -103,13 +115,15 @@ export class BCDBuffer {
         this.i = Math.min(39, this.i);
     }
 
-    /// Get the length of the BCD in bytes.
+    /** Get the length of the BCD in bytes. */
     public len_in_bytes(): number {
         return ((this.i >> 1) + (this.i % 2));
     }
 
-    /// Returns the BCD bytes. Use this function to obtain the output of the
-    /// BCD buffer.
+    /**
+     * Returns the BCD bytes. Use this function to obtain the output of the
+     * BCD buffer.
+     */
     public as_ref(): Uint8Array {
         return this.bytes.subarray(0, this.len_in_bytes());
     }
@@ -126,6 +140,7 @@ export class BCDBuffer {
     //     return [0, max_digits];
     // }
 
+    // TODO: JSDoc
     public *iter_digits(
         least_sig_nybble: boolean = false,
         leading_0_sig: boolean = true,
