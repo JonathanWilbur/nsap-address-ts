@@ -46,7 +46,60 @@ depend on `Buffer` (the tests, do, though).
 
 ## Usage
 
-TODO: Fill in
+Most of what you would want out of this module is parsing, printing, encoding,
+decoding, and comparing NSAP addresses. Without further ado, here is a quick
+showcase of this module's features:
+
+```typescript
+import { X213NetworkAddress } from "@wildboar/nsap-address";
+
+const addr = X213NetworkAddress.fromString("PSTN+8881235050+ECMA-117-Decimal+65535+35492+128");
+// s is "PSTN+8881235050+ECMA-117-Decimal+65535+35492+128"
+const s = addr.toString();
+// b are the bytes of the encoding described in ITU-T Rec. X.213, Annex A.
+const b = addr.getOctets();
+// This evaluates to true, of course. This is just a trivial byte comparison.
+b.isEqualTo(b);
+// 0x42 (AFI_E163_DEC_LEADING_NON_ZERO) The AFI for E.163 with no leading zero and a decimal DSP
+const afi = addr.afi();
+// This always converts the address to a string of the `NS+<hex>` format.
+// While not user-friendly, this is the best format for interoperability.
+const ns = addr.toNSString();
+// idi_digits is [ 8,8,8,1,2,3,5,0,5,0 ]
+const idi_digits = Array.from(addr.idiDigits() ?? []);
+// dsp_digits is [ 6,5,5,3,5,3,5,4,9,2,1,2,8 ]
+const dsp_digits = Array.from(addr.dspDigits() ?? []);
+
+const addr2 = X213NetworkAddress.fromIpAddress([ 127, 0, 0, 1 ]);
+const ip = addr2.getIp(); // [ 127, 0, 0, 1 ]
+
+const addr3 = X213NetworkAddress.fromNonOsiUrl("tcp://127.0.0.1");
+const url = addr3.getUrl(); // "tcp://127.0.0.1"
+```
+
+There is sort of a "mini-database" of NSAP AFI's / network types, etc. You can use it like so:
+
+```typescript
+import {
+    get_nsap_address_schema,
+    afi_to_network_type,
+    is_individual_afi,
+    is_group_afi,
+    group_afi_to_individual_afi,
+} from "@wildboar/nsap-address/data";
+
+const afi = 0x58;
+const schema = get_nsap_address_schema(afi);
+schema.network_type; // "e164"
+schema.leading_zeroes_in_idi; // true
+schema.dsp_syntax; // "decimal"
+schema.max_idi_len_digits; // 15
+schema.idi_len_exact; // false
+afi_to_network_type(afi); // "e164"
+is_individual_afi(afi); // true
+is_group_afi(afi); // false
+group_afi_to_individual_afi(afi) === afi; // true
+```
 
 ## AI Usage Statement
 
@@ -67,8 +120,7 @@ counts as "not written by AI" overall.
 
 ## To Do
 
-- [x] Rename functions to use camelCase
-- [ ] Fill in usage docs
+- [x] Fill in usage docs
 - [ ] GitHub Actions
 - [ ] Make corresponding fixes in Rust crate
 
