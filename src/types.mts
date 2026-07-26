@@ -229,7 +229,7 @@ export class X213NetworkAddress {
      * @summary Get the bytes of the NSAP address
      * @returns The bytes of the NSAP address.
      */
-    public get_octets(): Uint8Array {
+    public getOctets(): Uint8Array {
         return this.bytes;
     }
 
@@ -248,12 +248,12 @@ export class X213NetworkAddress {
     }
 
     /** Get network type info for this NSAP address */
-    public get_network_type_info(): X213NetworkAddressInfo | undefined {
+    public getNetworkTypeInfo(): X213NetworkAddressInfo | undefined {
         return get_nsap_address_schema(this.afi());
     }
 
     /** Get the network type for this NSAP address */
-    public get_network_type(): X213NetworkAddressType | undefined {
+    public getNetworkType(): X213NetworkAddressType | undefined {
         return afi_to_network_type(this.afi());
     }
 
@@ -265,7 +265,7 @@ export class X213NetworkAddress {
      *  since the end of the IDI cannot be determined.
      * @function
      */
-    public idi_digits(): IterableIterator<number, void> | undefined {
+    public idiDigits(): IterableIterator<number, void> | undefined {
         const addr_type_info = get_nsap_address_schema(this.afi());
         if (!addr_type_info) {
             return undefined;
@@ -294,7 +294,7 @@ export class X213NetworkAddress {
      *  if the DSP syntax is not decimal.
      * @function
      */
-    public dsp_digits(): IterableIterator<number, void> | undefined {
+    public dspDigits(): IterableIterator<number, void> | undefined {
         const addr_type_info = get_nsap_address_schema(this.afi());
         if (!addr_type_info) {
             return undefined;
@@ -331,8 +331,8 @@ export class X213NetworkAddress {
      *  encode a URL
      * @function
      */
-    public get_url(): string | undefined {
-        const octets = this.get_octets();
+    public getUrl(): string | undefined {
+        const octets = this.getOctets();
         // It couldn't be a valid URL in two characters, AFAIK.
         if ((octets.length <= 5) || (octets[0] != AFI_URL)) {
             return undefined;
@@ -353,8 +353,8 @@ export class X213NetworkAddress {
      * @returns `undefined` if this NSAP does not encode an IP address
      * @function
      */
-    public get_ip(): Ipv4Address | Ipv6Address | undefined {
-        const octets = this.get_octets();
+    public getIpAddress(): Ipv4Address | Ipv6Address | undefined {
+        const octets = this.getOctets();
         // FIXME: The Rust crate does not check for 20-byte length.
         if ((octets.length !== 20) || (octets[0] != AFI_IANA_ICP_BIN)) {
             return undefined;
@@ -388,8 +388,8 @@ export class X213NetworkAddress {
      *  or `undefined` if this NSAP does not encode an ITOT socket address.
      * @function
      */
-    public get_rfc1277_socket(): Rfc1277SocketInfo | undefined {
-        const octets = this.get_octets();
+    public getRfc1277Socket(): Rfc1277SocketInfo | undefined {
+        const octets = this.getOctets();
         const prefix = octets.subarray(0, RFC_1277_PREFIX.length);
         if (!uint8ArrayCompare(prefix, new Uint8Array(RFC_1277_PREFIX))) {
             return undefined;
@@ -467,7 +467,7 @@ export class X213NetworkAddress {
      * @static
      * @function
      */
-    public static from_ip(ip: Ipv4Address | Ipv6Address): X213NetworkAddress | NSAPAddressParseError {
+    public static fromIpAddress(ip: Ipv4Address | Ipv6Address): X213NetworkAddress | NSAPAddressParseError {
         // IANA ICP NSAP addresses are always 20 bytes
         const out = new Uint8Array(20);
         out[0] = AFI_IANA_ICP_BIN;
@@ -484,8 +484,8 @@ export class X213NetworkAddress {
      * @static
      * @function
      */
-    public static from_ipv4(ip: Ipv4Address): X213NetworkAddress | NSAPAddressParseError {
-        return X213NetworkAddress.from_ip(ip);
+    public static fromIpv4Address(ip: Ipv4Address): X213NetworkAddress | NSAPAddressParseError {
+        return X213NetworkAddress.fromIpAddress(ip);
     }
 
     /**
@@ -495,8 +495,8 @@ export class X213NetworkAddress {
      * @static
      * @function
      */
-    public static from_ipv6(ip: Ipv6Address): X213NetworkAddress | NSAPAddressParseError {
-        return X213NetworkAddress.from_ip(ip);
+    public static fromIpv6Address(ip: Ipv6Address): X213NetworkAddress | NSAPAddressParseError {
+        return X213NetworkAddress.fromIpAddress(ip);
     }
 
     /**
@@ -508,7 +508,7 @@ export class X213NetworkAddress {
      * @function
      * @private
      */
-    private static from_url(url: string, idi_byte_2: number): X213NetworkAddress | NSAPAddressParseError {
+    private static fromUrl(url: string, idi_byte_2: number): X213NetworkAddress | NSAPAddressParseError {
         const urlBytes = new TextEncoder().encode(url);
         const out = new Uint8Array(3 + urlBytes.length);
         out[0] = AFI_URL;
@@ -525,8 +525,8 @@ export class X213NetworkAddress {
      * @static
      * @function
      */
-    public static from_itot_url(url: string): X213NetworkAddress | NSAPAddressParseError {
-        return X213NetworkAddress.from_url(url, 0);
+    public static fromItotUrl(url: string): X213NetworkAddress | NSAPAddressParseError {
+        return X213NetworkAddress.fromUrl(url, 0);
     }
 
     /**
@@ -536,8 +536,8 @@ export class X213NetworkAddress {
      * @static
      * @function
      */
-    public static from_non_osi_url(url: string): X213NetworkAddress | NSAPAddressParseError {
-        return X213NetworkAddress.from_url(url, 1);
+    public static fromNonOsiUrl(url: string): X213NetworkAddress | NSAPAddressParseError {
+        return X213NetworkAddress.fromUrl(url, 1);
     }
 
     /**
@@ -555,7 +555,7 @@ export class X213NetworkAddress {
      * @static
      * @function
      */
-    public static from_socket_addr_v4(
+    public static fromSocketAddress(
         network: number,
         ip: Ipv4Address,
         port: number,
@@ -606,8 +606,8 @@ export class X213NetworkAddress {
      * @returns The NSAP address as a string.
      * @function
      */
-    public to_ns_string(): string {
-        const hex = Array.from(this.get_octets())
+    public toNSString(): string {
+        const hex = Array.from(this.getOctets())
             .map((byte) => byte.toString(16).toUpperCase().padStart(2, "0"))
             .join("")
             ;
@@ -660,8 +660,8 @@ export class X213NetworkAddress {
      * @param other The other NSAP address to compare to.
      * @returns `true` if the NSAP addresses are equal, `false` otherwise.
      */
-    public isEqualto(other: X213NetworkAddress): boolean {
-        return uint8ArrayCompare(this.get_octets(), other.get_octets());
+    public isEqualTo(other: X213NetworkAddress): boolean {
+        return uint8ArrayCompare(this.getOctets(), other.getOctets());
     }
 }
 

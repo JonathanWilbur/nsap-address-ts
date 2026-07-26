@@ -154,10 +154,10 @@ export function fmt_naddr(
             return out;
         }
     }
-    const info: X213NetworkAddressInfo | undefined = naddr.get_network_type_info();
-    const idi_digits = naddr.idi_digits();
+    const info: X213NetworkAddressInfo | undefined = naddr.getNetworkTypeInfo();
+    const idi_digits = naddr.idiDigits();
     if (!info || !idi_digits) {
-        return naddr.to_ns_string();
+        return naddr.toNSString();
     }
     const is_non_standard: boolean = (
         (info.network_type === "url")
@@ -172,7 +172,7 @@ export function fmt_naddr(
     let cant_display: boolean =
         (is_non_standard && !(only_standard)) || is_group_afi(naddr.afi());
     if (cant_display) {
-        return naddr.to_ns_string();
+        return naddr.toNSString();
     }
     let out = naddr_network_type_to_str(info.network_type) + "+";
     for (const digit of idi_digits) {
@@ -182,11 +182,11 @@ export function fmt_naddr(
     const idi_len = info.max_idi_len_digits;
     const idi_len_in_bytes = idi_len >> 1;
     if (info.dsp_syntax === "decimal") {
-        const dsp_digits = naddr.dsp_digits();
+        const dsp_digits = naddr.dspDigits();
         if (!dsp_digits) {
             // This shouldn't happen
             out += "x";
-            out += Array.from(naddr.get_octets())
+            out += Array.from(naddr.getOctets())
                 .slice(1 + idi_len_in_bytes)
                 .map((byte) => byte.toString(16).toUpperCase().padStart(2, "0"))
                 .join("")
@@ -198,13 +198,13 @@ export function fmt_naddr(
             out += String.fromCharCode(digit + 0x30);
         }
     } else if (info.dsp_syntax === "binary" || info.dsp_syntax === "national") {
-        const dsp = naddr.get_octets().subarray(1 + idi_len_in_bytes);
+        const dsp = naddr.getOctets().subarray(1 + idi_len_in_bytes);
         out += "x";
         for (const byte of dsp) {
             out += byte.toString(16).toUpperCase().padStart(2, "0");
         }
     } else if (info.dsp_syntax === "iso646") {
-        const dsp = naddr.get_octets().subarray(1 + idi_len_in_bytes);
+        const dsp = naddr.getOctets().subarray(1 + idi_len_in_bytes);
         const decoded = Array.from(dsp)
             .map((b) => local_iso_iec_646_byte_to_char(b))
             .join("")

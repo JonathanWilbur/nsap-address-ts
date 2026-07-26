@@ -67,8 +67,7 @@ counts as "not written by AI" overall.
 
 ## To Do
 
-- [x] Fix `ignore_last_nybble`
-- [ ] Rename functions to use camelCase
+- [x] Rename functions to use camelCase
 - [ ] Fill in usage docs
 - [ ] GitHub Actions
 - [ ] Make corresponding fixes in Rust crate
