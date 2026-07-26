@@ -120,18 +120,6 @@ export class BCDBuffer {
         return this.bytes.subarray(0, this.len_in_bytes());
     }
 
-    // public size_hint(): [ number, number | undefined ] {
-    //     let max_digits = this.bytes.length << 1; // Double it
-    //     if (this.least_sig_nybble) {
-    //         max_digits = Math.max(0, max_digits - 1);
-    //     }
-    //     if (this.ignore_last_nybble) {
-    //         max_digits = Math.max(0, max_digits - 1);
-    //     }
-    //     // Every digit could be a leading digit
-    //     return [0, max_digits];
-    // }
-
     // FIXME: The Rust type is ShouldBeASCIIDigit, but I don't think that is accurate.
     /**
      * @summary Iterate over the digits in the BCD buffer.
@@ -173,9 +161,20 @@ export class BCDBuffer {
                     processing_leading_digits = false;
                 }
             }
-            // If the last nybble is 0b1111, it is padding.
-            if ((nybble === 0b1111) || ignore_last_nybble) {
-                // FIXME: ignore_last_nybble is not handled correctly.
+            
+            const is_last_nybble = (
+                (i >= len) // i has already been incremented above.
+                && !least_sig_nybble // this has already been flipped above.
+            );
+            if (
+                // If the last nybble is 0b1111, it is padding.
+                (nybble === 0b1111)
+                || (
+                    ignore_last_nybble
+                    && is_last_nybble
+                )
+            ) {
+                // FIXME: I think ignore_last_nybble is not handled correctly in the Rust crate.
                 return;
             }
             yield nybble;

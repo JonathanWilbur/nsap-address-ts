@@ -1,7 +1,12 @@
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
 import { X213NetworkAddress } from "../dist/types.mjs";
-import { ITOT_OVER_IPV4_DEFAULT_PORT, DEFAULT_ITOT_TRANSPORT_SET, AFI_IANA_ICP_BIN } from "../dist/data.mjs";
+import {
+    ITOT_OVER_IPV4_DEFAULT_PORT,
+    DEFAULT_ITOT_TRANSPORT_SET,
+    AFI_IANA_ICP_BIN,
+    AFI_ISO_DCC_DEC,
+} from "../dist/data.mjs";
 
 describe("X213NetworkAddress", () => {
 
@@ -178,5 +183,21 @@ describe("X213NetworkAddress", () => {
         const naddr2 = new X213NetworkAddress(naddr.bytes.subarray(1));
         const info = naddr2.get_rfc1277_socket();
         assert.ok(!info);
+    });
+
+    // TODO: Port this to the Rust crate. This is an extremely important test case.
+    it("idi_digits() should return the correct digits when an odd-length idi is used with a decimal dsp", () => {
+        // The ISO-DCC AFI was chosen because it uses exactly 3 digits in the IDI.
+        // When a decimal DSP is used, its first digit should be the least
+        // significant nybble in the same byte whose most significant nybble is
+        // the last digit of the IDI. We therefore want to ensure that idi_digits()
+        // does not mistakenly include the DSP digit from this shared byte.
+        const addr = X213NetworkAddress.fromString("DCC+840+d1234");
+        assert.notEqual(typeof addr, "string", `Error was ${addr}`);
+        assert.deepEqual(addr.bytes, new Uint8Array([AFI_ISO_DCC_DEC, 0x84, 0x01, 0x23, 0x4F]));
+        const idi_digits = Array.from(addr.idi_digits());
+        const dsp_digits = Array.from(addr.dsp_digits());
+        assert.deepEqual(idi_digits, [8, 4, 0]);
+        assert.deepEqual(dsp_digits, [1, 2, 3, 4]);
     });
 });

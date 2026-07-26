@@ -65,6 +65,14 @@ counts as "not written by AI" overall.
 - `IP4`, `IP6`, and `URL` schemes supported in `FromStr` and `Display`
 - Zero-length IDI tolerated in parsed strings when using the `LOCAL` syntax
 
+## To Do
+
+- [x] Fix `ignore_last_nybble`
+- [ ] Rename functions to use camelCase
+- [ ] Fill in usage docs
+- [ ] GitHub Actions
+- [ ] Make corresponding fixes in Rust crate
+
 ## To Do (Future)
 
 - [ ] Support [GOSIP NSAP addressing](https://medium.com/@jacstech/jacs-nsap-structure-8cb9a809228b)
