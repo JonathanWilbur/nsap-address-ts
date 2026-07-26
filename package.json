@@ -1,7 +1,7 @@
 {
   "name": "nsap-address",
   "description": "ITU-T Rec. X.213 Network Service Access Point (NSAP) address parsing and printing",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "author": {
     "name": "Jonathan M. Wilbur",
     "email": "jonathan@wilbur.space",
@@ -40,8 +40,10 @@
   },
   "scripts": {
     "build": "tsc",
-    "test": "node --test test/*.spec.mjs",
-    "test:coverage": "node --test --experimental-test-coverage test/*.spec.mjs"
+    "node-test": "node --test test/*.spec.mjs",
+    "node-test:coverage": "node --test --experimental-test-coverage test/*.spec.mjs",
+    "deno-test": "deno test --allow-read --allow-write --allow-env --allow-run test/*.spec.mjs",
+    "bun-test": "bun test test/*.spec.mjs"
   },
   "exports": {
     ".": {
