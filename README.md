@@ -77,7 +77,8 @@ const addr3 = X213NetworkAddress.fromNonOsiUrl("tcp://127.0.0.1");
 const url = addr3.getUrl(); // "tcp://127.0.0.1"
 ```
 
-There is sort of a "mini-database" of NSAP AFI's / network types, etc. You can use it like so:
+There is sort of a "mini-database" of NSAP AFI's / network types, etc. You can
+use it like so:
 
 ```typescript
 import {
@@ -117,12 +118,6 @@ counts as "not written by AI" overall.
 - `ICP` and `IND` AFIs recognized in the `<afi>-<idi>-<dsp>` syntax
 - `IP4`, `IP6`, and `URL` schemes supported in `FromStr` and `Display`
 - Zero-length IDI tolerated in parsed strings when using the `LOCAL` syntax
-
-## To Do
-
-- [x] Fill in usage docs
-- [ ] GitHub Actions
-- [ ] Make corresponding fixes in Rust crate
 
 ## To Do (Future)
 
