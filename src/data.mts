@@ -18,47 +18,47 @@ export const SMALLEST_VALID_NSAP_ADDR: number = 2;
 ///
 /// The IDI has a fixed length of four digits. The DSP encodes a URL in an
 /// unspecified encoding (presumably UTF-8).
-export const AFI_URL: number  = 0xFF;
+export const AFI_URL: number = 0xFF;
 /// AFI for an X.121 Address (used for X.25), decimal, leading non-zero digit
-export const AFI_X121_DEC_LEADING_NON_ZERO: number  = 0x36;
+export const AFI_X121_DEC_LEADING_NON_ZERO: number = 0x36;
 /// AFI for an X.121 Address (used for X.25), decimal, leading zero digit
-export const AFI_X121_DEC_LEADING_ZERO: number  = 0x52;
+export const AFI_X121_DEC_LEADING_ZERO: number = 0x52;
 /// AFI for an X.121 Address (used for X.25), binary, leading non-zero digit
-export const AFI_X121_BIN_LEADING_NON_ZERO: number  = 0x37;
+export const AFI_X121_BIN_LEADING_NON_ZERO: number = 0x37;
 /// AFI for an X.121 Address (used for X.25), binary, leading zero digit
-export const AFI_X121_BIN_LEADING_ZERO: number  = 0x53;
+export const AFI_X121_BIN_LEADING_ZERO: number = 0x53;
 /// AFI for ISO Data Country Code (DCC) decimal
-export const AFI_ISO_DCC_DEC: number  = 0x38;
+export const AFI_ISO_DCC_DEC: number = 0x38;
 /// AFI for ISO Data Country Code (DCC) binary
-export const AFI_ISO_DCC_BIN: number  = 0x39;
+export const AFI_ISO_DCC_BIN: number = 0x39;
 /// AFI for F.69 / Telex, decimal, leading non-zero digit
-export const AFI_F69_DEC_LEADING_NON_ZERO: number  = 0x40;
+export const AFI_F69_DEC_LEADING_NON_ZERO: number = 0x40;
 /// AFI for F.69 / Telex, decimal, leading zero digit
-export const AFI_F69_DEC_LEADING_ZERO: number  = 0x54;
+export const AFI_F69_DEC_LEADING_ZERO: number = 0x54;
 /// AFI for F.69 / Telex, binary, leading non-zero digit
-export const AFI_F69_BIN_LEADING_NON_ZERO: number  = 0x41;
+export const AFI_F69_BIN_LEADING_NON_ZERO: number = 0x41;
 /// AFI for F.69 / Telex, binary, leading zero digit
-export const AFI_F69_BIN_LEADING_ZERO: number  = 0x55;
+export const AFI_F69_BIN_LEADING_ZERO: number = 0x55;
 /// AFI for E.163 number (used in PSTN), decimal, leading non-zero digit
-export const AFI_E163_DEC_LEADING_NON_ZERO: number  = 0x42;
+export const AFI_E163_DEC_LEADING_NON_ZERO: number = 0x42;
 /// AFI for E.163 number (used in PSTN), decimal, leading zero digit
-export const AFI_E163_DEC_LEADING_ZERO: number  = 0x56;
+export const AFI_E163_DEC_LEADING_ZERO: number = 0x56;
 /// AFI for E.163 number (used in PSTN), binary, leading non-zero digit
-export const AFI_E163_BIN_LEADING_NON_ZERO: number  = 0x43;
+export const AFI_E163_BIN_LEADING_NON_ZERO: number = 0x43;
 /// AFI for E.163 number (used in PSTN), binary, leading zero digit
-export const AFI_E163_BIN_LEADING_ZERO: number  = 0x57;
+export const AFI_E163_BIN_LEADING_ZERO: number = 0x57;
 /// AFI for E.164 number (used in ISDN), decimal, leading non-zero digit
-export const AFI_E164_DEC_LEADING_NON_ZERO: number  = 0x44;
+export const AFI_E164_DEC_LEADING_NON_ZERO: number = 0x44;
 /// AFI for E.164 number (used in ISDN), decimal, leading zero digit
-export const AFI_E164_DEC_LEADING_ZERO: number  = 0x58;
+export const AFI_E164_DEC_LEADING_ZERO: number = 0x58;
 /// AFI for E.164 number (used in ISDN), binary, leading non-zero digit
-export const AFI_E164_BIN_LEADING_NON_ZERO: number  = 0x45;
+export const AFI_E164_BIN_LEADING_NON_ZERO: number = 0x45;
 /// AFI for E.164 number (used in ISDN), binary, leading zero digit
-export const AFI_E164_BIN_LEADING_ZERO: number  = 0x59;
+export const AFI_E164_BIN_LEADING_ZERO: number = 0x59;
 /// AFI for ISO/IEC 6523 International Code Designator (ICD), decimal
-export const AFI_ISO_6523_ICD_DEC: number  = 0x46;
+export const AFI_ISO_6523_ICD_DEC: number = 0x46;
 /// AFI for ISO/IEC 6523 International Code Designator (ICD), binary
-export const AFI_ISO_6523_ICD_BIN: number  = 0x47;
+export const AFI_ISO_6523_ICD_BIN: number = 0x47;
 
 /// AFI for IANA Internet Code Point (ICP), decimal, per IETF RFFC 4548
 ///
@@ -68,169 +68,169 @@ export const AFI_ISO_6523_ICD_BIN: number  = 0x47;
 /// > allocated for assignment of NSAPA in Decimal Numeric Format.  This
 /// > document does not address allocation for this AFI as it is not clear
 /// > what use (if any) can be made of this encoding format at this time.
-export const AFI_IANA_ICP_DEC: number  = 0x34;
+export const AFI_IANA_ICP_DEC: number = 0x34;
 
 /// AFI for IANA Internet Code Point (ICP), binary, per IETF RFFC 4548
-export const AFI_IANA_ICP_BIN: number  = 0x35;
+export const AFI_IANA_ICP_BIN: number = 0x35;
 
 /// AFI for ITU Rec. E.191.1 International Network Designator (IDN), decimal
-export const AFI_ITU_T_IND_DEC: number  = 0x76;
+export const AFI_ITU_T_IND_DEC: number = 0x76;
 /// AFI for ITU Rec. E.191.1 International Network Designator (IDN), decimal
-export const AFI_ITU_T_IND_BIN: number  = 0x77;
+export const AFI_ITU_T_IND_BIN: number = 0x77;
 /// Local AFI, decimal
-export const AFI_LOCAL_DEC: number  = 0x48;
+export const AFI_LOCAL_DEC: number = 0x48;
 /// Local AFI, binary
-export const AFI_LOCAL_BIN: number  = 0x49;
+export const AFI_LOCAL_BIN: number = 0x49;
 /// Local AFI, ISO/IEC 646 (ASCII or ASCII-like)
-export const AFI_LOCAL_ISO_IEC_646: number  = 0x50;
+export const AFI_LOCAL_ISO_IEC_646: number = 0x50;
 /// Local AFI, characters from a national character set
-export const AFI_LOCAL_NATIONAL: number  = 0x51;
+export const AFI_LOCAL_NATIONAL: number = 0x51;
 
 /// Group AFI for [AFI_X121_DEC_LEADING_NON_ZERO]
-export const GROUP_AFI_X121_DEC_LEADING_NON_ZERO: number  = 0xBA;
+export const GROUP_AFI_X121_DEC_LEADING_NON_ZERO: number = 0xBA;
 /// Group AFI for [AFI_X121_DEC_LEADING_ZERO]
-export const GROUP_AFI_X121_DEC_LEADING_ZERO: number  = 0xCA;
+export const GROUP_AFI_X121_DEC_LEADING_ZERO: number = 0xCA;
 /// Group AFI for [AFI_X121_BIN_LEADING_NON_ZERO]
-export const GROUP_AFI_X121_BIN_LEADING_NON_ZERO: number  = 0xBB;
+export const GROUP_AFI_X121_BIN_LEADING_NON_ZERO: number = 0xBB;
 /// Group AFI for [AFI_X121_BIN_LEADING_ZERO]
-export const GROUP_AFI_X121_BIN_LEADING_ZERO: number  = 0xCB;
+export const GROUP_AFI_X121_BIN_LEADING_ZERO: number = 0xCB;
 /// Group AFI for [AFI_ISO_DCC_DEC]
-export const GROUP_AFI_ISO_DCC_DEC: number  = 0xBC;
+export const GROUP_AFI_ISO_DCC_DEC: number = 0xBC;
 /// Group AFI for [AFI_ISO_DCC_BIN]
-export const GROUP_AFI_ISO_DCC_BIN: number  = 0xBD;
+export const GROUP_AFI_ISO_DCC_BIN: number = 0xBD;
 /// Group AFI for [AFI_F69_DEC_LEADING_NON_ZERO]
-export const GROUP_AFI_F69_DEC_LEADING_NON_ZERO: number  = 0xBE;
+export const GROUP_AFI_F69_DEC_LEADING_NON_ZERO: number = 0xBE;
 /// Group AFI for [AFI_F69_DEC_LEADING_ZERO]
-export const GROUP_AFI_F69_DEC_LEADING_ZERO: number  = 0xCC;
+export const GROUP_AFI_F69_DEC_LEADING_ZERO: number = 0xCC;
 /// Group AFI for [AFI_F69_BIN_LEADING_NON_ZERO]
-export const GROUP_AFI_F69_BIN_LEADING_NON_ZERO: number  = 0xBF;
+export const GROUP_AFI_F69_BIN_LEADING_NON_ZERO: number = 0xBF;
 /// Group AFI for [AFI_F69_BIN_LEADING_ZERO]
-export const GROUP_AFI_F69_BIN_LEADING_ZERO: number  = 0xCD;
+export const GROUP_AFI_F69_BIN_LEADING_ZERO: number = 0xCD;
 /// Group AFI for [AFI_E163_DEC_LEADING_NON_ZERO]
-export const GROUP_AFI_E163_DEC_LEADING_NON_ZERO: number  = 0xC0;
+export const GROUP_AFI_E163_DEC_LEADING_NON_ZERO: number = 0xC0;
 /// Group AFI for [AFI_E163_DEC_LEADING_ZERO]
-export const GROUP_AFI_E163_DEC_LEADING_ZERO: number  = 0xCE;
+export const GROUP_AFI_E163_DEC_LEADING_ZERO: number = 0xCE;
 /// Group AFI for [AFI_E163_BIN_LEADING_NON_ZERO]
-export const GROUP_AFI_E163_BIN_LEADING_NON_ZERO: number  = 0xC1;
+export const GROUP_AFI_E163_BIN_LEADING_NON_ZERO: number = 0xC1;
 /// Group AFI for [AFI_E163_BIN_LEADING_ZERO]
-export const GROUP_AFI_E163_BIN_LEADING_ZERO: number  = 0xCF;
+export const GROUP_AFI_E163_BIN_LEADING_ZERO: number = 0xCF;
 /// Group AFI for [AFI_E164_DEC_LEADING_NON_ZERO]
-export const GROUP_AFI_E164_DEC_LEADING_NON_ZERO: number  = 0xC2;
+export const GROUP_AFI_E164_DEC_LEADING_NON_ZERO: number = 0xC2;
 /// Group AFI for [AFI_E164_DEC_LEADING_ZERO]
-export const GROUP_AFI_E164_DEC_LEADING_ZERO: number  = 0xD0;
+export const GROUP_AFI_E164_DEC_LEADING_ZERO: number = 0xD0;
 /// Group AFI for [AFI_E164_BIN_LEADING_NON_ZERO]
-export const GROUP_AFI_E164_BIN_LEADING_NON_ZERO: number  = 0xC3;
+export const GROUP_AFI_E164_BIN_LEADING_NON_ZERO: number = 0xC3;
 /// Group AFI for [AFI_E164_BIN_LEADING_ZERO]
-export const GROUP_AFI_E164_BIN_LEADING_ZERO: number  = 0xD1;
+export const GROUP_AFI_E164_BIN_LEADING_ZERO: number = 0xD1;
 /// Group AFI for [AFI_ISO_6523_ICD_DEC]
-export const GROUP_AFI_ISO_6523_ICD_DEC: number  = 0xC4;
+export const GROUP_AFI_ISO_6523_ICD_DEC: number = 0xC4;
 /// Group AFI for [AFI_ISO_6523_ICD_BIN]
-export const GROUP_AFI_ISO_6523_ICD_BIN: number  = 0xC5;
+export const GROUP_AFI_ISO_6523_ICD_BIN: number = 0xC5;
 /// Group AFI for [AFI_IANA_ICP_DEC]
-export const GROUP_AFI_IANA_ICP_DEC: number  = 0xB8;
+export const GROUP_AFI_IANA_ICP_DEC: number = 0xB8;
 /// Group AFI for [AFI_IANA_ICP_BIN]
-export const GROUP_AFI_IANA_ICP_BIN: number  = 0xB9;
+export const GROUP_AFI_IANA_ICP_BIN: number = 0xB9;
 /// Group AFI for [AFI_ITU_T_IND_DEC]
-export const GROUP_AFI_ITU_T_IND_DEC: number  = 0xE2;
+export const GROUP_AFI_ITU_T_IND_DEC: number = 0xE2;
 /// Group AFI for [AFI_ITU_T_IND_BIN]
-export const GROUP_AFI_ITU_T_IND_BIN: number  = 0xE3;
+export const GROUP_AFI_ITU_T_IND_BIN: number = 0xE3;
 /// Group AFI for [AFI_LOCAL_DEC]
-export const GROUP_AFI_LOCAL_DEC: number  = 0xC6;
+export const GROUP_AFI_LOCAL_DEC: number = 0xC6;
 /// Group AFI for [AFI_LOCAL_BIN]
-export const GROUP_AFI_LOCAL_BIN: number  = 0xC7;
+export const GROUP_AFI_LOCAL_BIN: number = 0xC7;
 /// Group AFI for [AFI_LOCAL_ISO_IEC_646]
-export const GROUP_AFI_LOCAL_ISO_IEC_646: number  = 0xC8;
+export const GROUP_AFI_LOCAL_ISO_IEC_646: number = 0xC8;
 /// Group AFI for [AFI_LOCAL_NATIONAL]
-export const GROUP_AFI_LOCAL_NATIONAL: number  = 0xC9;
+export const GROUP_AFI_LOCAL_NATIONAL: number = 0xC9;
 
 /// Maximum decimal DSP length in digits for X.121 / X.25 addressing
-export const MAX_DEC_DSP_LEN_DIGITS_X121: number  = 24;
+export const MAX_DEC_DSP_LEN_DIGITS_X121: number = 24;
 /// Maximum decimal DSP length in digits for ISO DCC
-export const MAX_DEC_DSP_LEN_DIGITS_ISO_DCC: number  = 35;
+export const MAX_DEC_DSP_LEN_DIGITS_ISO_DCC: number = 35;
 /// Maximum decimal DSP length in digits for F.69 addressing / Telex
-export const MAX_DEC_DSP_LEN_DIGITS_F69: number  = 30;
+export const MAX_DEC_DSP_LEN_DIGITS_F69: number = 30;
 /// Maximum decimal DSP length in digits for E.163 / PSTN addressing
-export const MAX_DEC_DSP_LEN_DIGITS_E163: number  = 26;
+export const MAX_DEC_DSP_LEN_DIGITS_E163: number = 26;
 /// Maximum decimal DSP length in digits for E.164 / ISDN addressing
-export const MAX_DEC_DSP_LEN_DIGITS_E164: number  = 23;
+export const MAX_DEC_DSP_LEN_DIGITS_E164: number = 23;
 /// Maximum decimal DSP length in digits for ISO/IEC 6523 ICD addressing
-export const MAX_DEC_DSP_LEN_DIGITS_ISO_6523_ICD: number  = 34;
+export const MAX_DEC_DSP_LEN_DIGITS_ISO_6523_ICD: number = 34;
 /// Maximum decimal DSP length in digits for IANA ICP (IPv4 or IPv6) addressing
-export const MAX_DEC_DSP_LEN_DIGITS_IANA_ICP: number  = 34;
+export const MAX_DEC_DSP_LEN_DIGITS_IANA_ICP: number = 34;
 /// Maximum decimal DSP length in digits for ITU-T IND addressing
-export const MAX_DEC_DSP_LEN_DIGITS_ITU_T_IND: number  = 32;
+export const MAX_DEC_DSP_LEN_DIGITS_ITU_T_IND: number = 32;
 /// Maximum decimal DSP length in digits for local addressing
-export const MAX_DEC_DSP_LEN_DIGITS_LOCAL: number  = 38;
+export const MAX_DEC_DSP_LEN_DIGITS_LOCAL: number = 38;
 
 /// Maximum binary DSP length in bytes for X.121 / X.25 addressing
-export const MAX_BIN_DSP_LEN_X121: number  = 12;
+export const MAX_BIN_DSP_LEN_X121: number = 12;
 /// Maximum binary DSP length in bytes for ISO DCC
-export const MAX_BIN_DSP_LEN_ISO_DCC: number  = 17;
+export const MAX_BIN_DSP_LEN_ISO_DCC: number = 17;
 /// Maximum binary DSP length in bytes for F.69 addressing / Telex
-export const MAX_BIN_DSP_LEN_F69: number  = 15;
+export const MAX_BIN_DSP_LEN_F69: number = 15;
 /// Maximum binary DSP length in bytes for E.163 / PSTN addressing
-export const MAX_BIN_DSP_LEN_E163: number  = 13;
+export const MAX_BIN_DSP_LEN_E163: number = 13;
 /// Maximum binary DSP length in bytes for E.164 / ISDN addressing
-export const MAX_BIN_DSP_LEN_E164: number  = 11;
+export const MAX_BIN_DSP_LEN_E164: number = 11;
 /// Maximum binary DSP length in bytes for ISO/IEC 6523 ICD addressing
-export const MAX_BIN_DSP_LEN_ISO_6523_ICD: number  = 17;
+export const MAX_BIN_DSP_LEN_ISO_6523_ICD: number = 17;
 /// Maximum binary DSP length in bytes for IANA ICP (IPv4 or IPv6) addressing
-export const MAX_BIN_DSP_LEN_IANA_ICP: number  = 17;
+export const MAX_BIN_DSP_LEN_IANA_ICP: number = 17;
 /// Maximum binary DSP length in bytes for ITU-T IND addressing
-export const MAX_BIN_DSP_LEN_ITU_T_IND: number  = 16;
+export const MAX_BIN_DSP_LEN_ITU_T_IND: number = 16;
 /// Maximum binary DSP length in bytes for local addressing
-export const MAX_BIN_DSP_LEN_LOCAL: number  = 19;
+export const MAX_BIN_DSP_LEN_LOCAL: number = 19;
 
 /// Maximum ISO/IEC 646-encoded DSP length in bytes for local addressing
-export const MAX_ISO_IEC_646_LEN_LOCAL: number  = 19;
+export const MAX_ISO_IEC_646_LEN_LOCAL: number = 19;
 /// Maximum national character-encoded DSP length in bytes for local addressing
-export const MAX_NATIONAL_CHAR_LEN_LOCAL: number  = 9;
+export const MAX_NATIONAL_CHAR_LEN_LOCAL: number = 9;
 
 /// Maximum IDI length in digits for X.121 / X.25 addressing
-export const MAX_IDI_LEN_DIGITS_X121: number  = 14; // Up to
+export const MAX_IDI_LEN_DIGITS_X121: number = 14; // Up to
 /// Maximum IDI length in digits for ISO DCC
-export const MAX_IDI_LEN_DIGITS_ISO_DCC: number  = 3; // Exactly
+export const MAX_IDI_LEN_DIGITS_ISO_DCC: number = 3; // Exactly
 /// Maximum IDI length in digits for F.69 addressing / Telex
-export const MAX_IDI_LEN_DIGITS_F69: number  = 8; // Up to
+export const MAX_IDI_LEN_DIGITS_F69: number = 8; // Up to
 /// Maximum IDI length in digits for E.163 / PSTN addressing
-export const MAX_IDI_LEN_DIGITS_E163: number  = 12; // Up to
+export const MAX_IDI_LEN_DIGITS_E163: number = 12; // Up to
 /// Maximum IDI length in digits for E.164 / ISDN addressing
-export const MAX_IDI_LEN_DIGITS_E164: number  = 15; // Up to
+export const MAX_IDI_LEN_DIGITS_E164: number = 15; // Up to
 /// Maximum IDI length in digits for ISO/IEC 6523 ICD addressing
-export const MAX_IDI_LEN_DIGITS_ISO_6523_ICD: number  = 4; // Exactly
+export const MAX_IDI_LEN_DIGITS_ISO_6523_ICD: number = 4; // Exactly
 /// Maximum IDI length in digits for IANA ICP (IPv4 or IPv6) addressing
-export const MAX_IDI_LEN_DIGITS_IANA_ICP: number  = 4; // Exactly
+export const MAX_IDI_LEN_DIGITS_IANA_ICP: number = 4; // Exactly
 /// Maximum IDI length in digits for ITU-T IND addressing
-export const MAX_IDI_LEN_DIGITS_ITU_T_IND: number  = 6; // Exactly
+export const MAX_IDI_LEN_DIGITS_ITU_T_IND: number = 6; // Exactly
 /// Maximum IDI length in digits for local addressing
-export const MAX_IDI_LEN_DIGITS_LOCAL: number  = 0; // Exactly
+export const MAX_IDI_LEN_DIGITS_LOCAL: number = 0; // Exactly
 /// Maximum IDI length in digits for ITU-T Rec. X.519 URL NSAPs
-export const MAX_IDI_LEN_DIGITS_URL: number  = 4; // Exactly.
+export const MAX_IDI_LEN_DIGITS_URL: number = 4; // Exactly.
 
 // DSP Prefixes that start with 0x54, 0x00, 0x72, 0x87, 0x22,
 
 /// IETF RFC 1277 well-known network: International X.25
-export const RFC_1277_WELL_KNOWN_NETWORK_INTL_X25: number  = 0x01;
+export const RFC_1277_WELL_KNOWN_NETWORK_INTL_X25: number = 0x01;
 /// IETF RFC 1277 well-known network: JANET
 ///
 /// See: <https://en.wikipedia.org/wiki/JANET>
-export const RFC_1277_WELL_KNOWN_NETWORK_JANET: number  = 0x02;
+export const RFC_1277_WELL_KNOWN_NETWORK_JANET: number = 0x02;
 /// IETF RFC 1277 well-known network: DARPA/NSF Internet (The internet)
-export const RFC_1277_WELL_KNOWN_NETWORK_DARPA_NSF_INTERNET: number  = 0x03;
+export const RFC_1277_WELL_KNOWN_NETWORK_DARPA_NSF_INTERNET: number = 0x03;
 /// IETF RFC 1277 well-known network: IXI
 ///
 /// See: <https://cordis.europa.eu/project/id/2718>
-export const RFC_1277_WELL_KNOWN_NETWORK_IXI: number  = 0x06;
+export const RFC_1277_WELL_KNOWN_NETWORK_IXI: number = 0x06;
 /// ITU-T Rec. X.519 DSP prefix for LDAP
-export const ITU_X519_DSP_PREFIX_LDAP: number  = 0x11;
+export const ITU_X519_DSP_PREFIX_LDAP: number = 0x11;
 /// ITU-T Rec. X.519 DSP prefix for IDM over IPv4
 ///
 /// See: <https://www.itu.int/rec/T-REC-X.519/en>
-export const ITU_X519_DSP_PREFIX_IDM_OVER_IPV4: number  = 0x10;
+export const ITU_X519_DSP_PREFIX_IDM_OVER_IPV4: number = 0x10;
 /// ITU-T Rec. X.519 DSP prefix for ISO Transport over TCP (ITOT) over IPv4
 ///
 /// See: <https://datatracker.ietf.org/doc/rfc2126/>
-export const ITU_X519_DSP_PREFIX_ITOT_OVER_IPV4: number  = RFC_1277_WELL_KNOWN_NETWORK_DARPA_NSF_INTERNET;
+export const ITU_X519_DSP_PREFIX_ITOT_OVER_IPV4: number = RFC_1277_WELL_KNOWN_NETWORK_DARPA_NSF_INTERNET;
 
 /// Default TCP port for ISO Transport over TCP (ITOT) per IETF RFC 2126
 ///
@@ -410,56 +410,56 @@ export interface X213NetworkAddressInfo {
 /// in the IDI is zero."
 
 const AFI_INFO_2: Map<number, X213NetworkAddressInfo> = new Map([
-    [ 34, {
+    [34, {
         network_type: "iana_icp",
         leading_zeroes_in_idi: false,
         dsp_syntax: "decimal",
         max_idi_len_digits: MAX_IDI_LEN_DIGITS_IANA_ICP,
         idi_len_exact: true,
-    } ],
-    [ 35, {
+    }],
+    [35, {
         network_type: "iana_icp",
         leading_zeroes_in_idi: false,
         dsp_syntax: "binary",
         max_idi_len_digits: MAX_IDI_LEN_DIGITS_IANA_ICP,
         idi_len_exact: true,
-    } ],
-    [ 36, {
+    }],
+    [36, {
         network_type: "x121",
         leading_zeroes_in_idi: false,
         dsp_syntax: "decimal",
         max_idi_len_digits: MAX_IDI_LEN_DIGITS_X121,
         idi_len_exact: false,
-    } ],
-    [ 37, {
+    }],
+    [37, {
         network_type: "x121",
         leading_zeroes_in_idi: false,
         dsp_syntax: "binary",
         max_idi_len_digits: MAX_IDI_LEN_DIGITS_X121,
         idi_len_exact: false,
-    } ],
-    [ 38, {
+    }],
+    [38, {
         network_type: "iso_dcc",
         leading_zeroes_in_idi: false,
         dsp_syntax: "decimal",
         max_idi_len_digits: MAX_IDI_LEN_DIGITS_ISO_DCC,
         idi_len_exact: true,
-    } ],
-    [ 39, {
+    }],
+    [39, {
         network_type: "iso_dcc",
         leading_zeroes_in_idi: false,
         dsp_syntax: "binary",
         max_idi_len_digits: MAX_IDI_LEN_DIGITS_ISO_DCC,
         idi_len_exact: true,
     }],
-    [ 40, {
+    [40, {
         network_type: "f69",
         leading_zeroes_in_idi: false,
         dsp_syntax: "decimal",
         max_idi_len_digits: MAX_IDI_LEN_DIGITS_F69,
         idi_len_exact: false,
     }],
-    [ 41, {
+    [41, {
         network_type: "f69",
         leading_zeroes_in_idi: false,
         dsp_syntax: "binary",

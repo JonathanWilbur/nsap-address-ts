@@ -60,7 +60,7 @@ counts as "not written by AI" overall.
 
 ## To Do (Now)
 
-- [ ] Formatting
+- [x] Formatting
 - [x] `index.mts`
 - [ ] Convert Rust documentation comments to JSDoc
 
