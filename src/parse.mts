@@ -1,4 +1,3 @@
-// TODO: Almost every function in this file needs JSDoc.
 import { type AFI, type DSPSyntax, X213NetworkAddress, type Ipv4Address } from "./types.mjs";
 import {
     ECMA_117_DECIMAL_STR, X25_PREFIX_STR,
@@ -16,20 +15,24 @@ import {
     AFI_STR_X121, AFI_STR_DCC, AFI_STR_TELEX, AFI_STR_PSTN, AFI_STR_ISDN, AFI_STR_ICD, AFI_STR_ICP, AFI_STR_IND, AFI_STR_LOCAL,
 } from "./data.mjs";
 import { u8_to_decimal_bytes, u16_to_decimal_bytes } from "./utils.mjs";
-import type { RFC1278ParseError } from "./error.mjs";
+import type { NSAPAddressParseError } from "./error.mjs";
 import { char_to_local_iso_iec_646_byte } from "./isoiec646.mjs";
 import { BCDBuffer } from "./bcd.mjs";
 
-type ParseResult = X213NetworkAddress | RFC1278ParseError;
+/**
+ * Result of parsing a string, or part of it, into an NSAP address
+ */
+export type ParseResult = X213NetworkAddress | NSAPAddressParseError;
 
-/** Validate that string is a digitstring and shorter than `max_len` */
-function validate_digitstring(s: string, max_len: number): boolean {
+/** Validate that string is a hexadecimal string and shorter than `max_len` */
+function validate_hexstring(s: string, max_len: number): boolean {
     return (
         (s.length <= max_len)
-        && (/^[0-9]+$/.test(s))
+        && (/^[0-9a-fA-F]+$/.test(s))
     );
 }
 
+/** Convert a hexadecimal string to a Uint8Array */
 function fromHex(hex: string): Uint8Array {
     if (typeof Uint8Array.fromHex === "function") {
         return Uint8Array.fromHex(hex);
@@ -47,6 +50,7 @@ function fromHex(hex: string): Uint8Array {
     return result;
 }
 
+// This function was written by Cursor IDE's AI / LLM.
 // Only the newest Javascript has built-in hex decoding without Buffer.
 const hexCharToValue = (code: number): number => {
     if (code >= 0x30 && code <= 0x39) return code - 0x30; // '0'-'9'
@@ -75,7 +79,7 @@ second <hexstring> non-optional, since this is optional in X.213.
 X.213 also says that the first byte of the <idp> may be hex,
 which RFC 1278 does not permit.
 */
-function decode_idp_only(s: string): X213NetworkAddress | RFC1278ParseError {
+function decode_idp_only(s: string): X213NetworkAddress | NSAPAddressParseError {
     if (!/\d+/.test(s.slice(2))) {
         return "malformed";
     }
@@ -231,7 +235,6 @@ function parse_textual_dsp(idp: BCDBuffer, dsp: string): ParseResult {
     return new X213NetworkAddress(out);
 }
 
-// TODO: Test this
 function parse_idp_and_dsp(idp: string, dsp: string, syntax: DSPSyntax): ParseResult {
     if (idp.length < 2 || !/^[0-9]+$/.test(idp.slice(2))) {
         return "malformed";
@@ -273,6 +276,7 @@ function parse_idp_and_dsp(idp: string, dsp: string, syntax: DSPSyntax): ParseRe
     return new X213NetworkAddress(out);
 }
 
+/** Parse an IPv4 address in the standard dotted-decimal notation from a string */
 function parse_ipv4(ip: string): Ipv4Address | null {
     const parts = ip.split(".");
     if (parts.length !== 4) {
@@ -438,6 +442,22 @@ function parse_ecma117_decimal_dsp(
     return new X213NetworkAddress(bcd_buf.as_ref());
 }
 
+/**
+ * @summary Parse a string into an NSAP address
+ * @description
+ *
+ * This function parses a string into an NSAP address according to the syntax
+ * defined in [IETF RFC 1278](https://datatracker.ietf.org/doc/html/rfc1278),
+ * but also supporting some modern non-standard syntaxes unless
+ * `only_standard` is `true`.
+ *
+ * @param s The NSAP string to parse.
+ * @param only_standard Whether to only parse syntaxes defined in
+ *  [IETF RFC 1278](https://datatracker.ietf.org/doc/html/rfc1278).
+ * @returns The parsed NSAP address, or an error as a `string` if the string is
+ *  not a valid NSAP address.
+ * @function
+ */
 export function parse_nsap(s: string, only_standard: boolean = false): ParseResult {
     // I think this is the shortest possible: NS+0011 or DCC+1+2
     if (s.length < 7) {
@@ -464,7 +484,7 @@ export function parse_nsap(s: string, only_standard: boolean = false): ParseResu
         return parse_ns_dsp(second_part);
     }
     if ((first_part == AFI_STR_URL) && !only_standard) {
-        if (!validate_digitstring(second_part, 4)) {
+        if (!validate_hexstring(second_part, 4)) {
             return "malformed";
         }
         if (!third_part?.length) {

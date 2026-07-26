@@ -217,7 +217,7 @@ export const RFC_1277_WELL_KNOWN_NETWORK_INTL_X25: number = 0x01;
 /**
  * IETF RFC 1277 well-known network: JANET
  *
- * See: <https://en.wikipedia.org/wiki/JANET>
+ * See the [JANET Wikipedia article](https://en.wikipedia.org/wiki/JANET).
  */
 export const RFC_1277_WELL_KNOWN_NETWORK_JANET: number = 0x02;
 /** IETF RFC 1277 well-known network: DARPA/NSF Internet (The internet) */
@@ -225,7 +225,8 @@ export const RFC_1277_WELL_KNOWN_NETWORK_DARPA_NSF_INTERNET: number = 0x03;
 /**
  * IETF RFC 1277 well-known network: IXI
  *
- * See: <https://cordis.europa.eu/project/id/2718>
+ * See [this page](https://cordis.europa.eu/project/id/2718) to learn about
+ * the IXI project.
  */
 export const RFC_1277_WELL_KNOWN_NETWORK_IXI: number = 0x06;
 /** ITU-T Rec. X.519 DSP prefix for LDAP */
@@ -233,20 +234,23 @@ export const ITU_X519_DSP_PREFIX_LDAP: number = 0x11;
 /**
  * ITU-T Rec. X.519 DSP prefix for IDM over IPv4
  *
- * See: <https://www.itu.int/rec/T-REC-X.519/en>
+ * See [ITU-T Rec. X.519](https://www.itu.int/rec/T-REC-X.519/en) for more
+ * information.
  */
 export const ITU_X519_DSP_PREFIX_IDM_OVER_IPV4: number = 0x10;
 /**
  * ITU-T Rec. X.519 DSP prefix for ISO Transport over TCP (ITOT) over IPv4
  *
- * See: <https://datatracker.ietf.org/doc/rfc2126/>
+ * See [IETF RFC 2126](https://datatracker.ietf.org/doc/rfc2126/) for more
+ * information.
  */
 export const ITU_X519_DSP_PREFIX_ITOT_OVER_IPV4: number = RFC_1277_WELL_KNOWN_NETWORK_DARPA_NSF_INTERNET;
 
 /**
  * Default TCP port for ISO Transport over TCP (ITOT) per IETF RFC 2126
  *
- * See: <https://datatracker.ietf.org/doc/rfc2126/>
+ * See [IETF RFC 2126](https://datatracker.ietf.org/doc/rfc2126/) for more
+ * information.
  */
 export const ITOT_OVER_IPV4_DEFAULT_PORT: number = 102;
 
@@ -290,17 +294,24 @@ export const IPV6_STR: string = "IP6";
 /**
  * IANA-allocated Internet Code Point for IPv4 per IETF RFC 4548
  *
- * See: <https://www.rfc-editor.org/rfc/rfc4548.html>
+ * See [IETF RFC 4548](https://www.rfc-editor.org/rfc/rfc4548.html) for more
+ * information.
  */
 export const IANA_ICP_IDI_IPV4: [number, number] = [0, 1];
 /**
  * IANA-allocated Internet Code Point for IPv6 per IETF RFC 4548
  *
- * See: <https://www.rfc-editor.org/rfc/rfc4548.html>
+ * See [IETF RFC 4548](https://www.rfc-editor.org/rfc/rfc4548.html) for more
+ * information.
  */
 export const IANA_ICP_IDI_IPV6: [number, number] = [0, 0];
 
-/** IETF RFC 1277 NSAP prefix for non-OSI addressing */
+/**
+ * IETF RFC 1277 NSAP prefix for non-OSI addressing
+ *
+ * See [IETF RFC 1277](https://datatracker.ietf.org/doc/html/rfc1277) for more
+ * information.
+ */
 export const RFC_1277_PREFIX: [number, number, number, number, number] = [
     AFI_F69_DEC_LEADING_ZERO, // AFI
     0x00,
@@ -309,7 +320,12 @@ export const RFC_1277_PREFIX: [number, number, number, number, number] = [
     0x22, // IDI
 ];
 
-/** Maps group AFIs to individual ones per Table A.2 in ITU-T Rec. X.213 */
+/**
+ * Maps group AFIs to individual ones per Table A.2 in ITU-T Rec. X.213
+ *
+ * See [ITU-T Rec. X.213](https://www.itu.int/rec/T-REC-X.213/en) for more
+ * information.
+ */
 export function group_afi_to_individual_afi(afi: AFI): AFI {
     switch (afi) {
         case (0xA1): return 0x11;
@@ -427,7 +443,6 @@ export interface X213NetworkAddressInfo {
  * "The numerically greater AFI value is used when the first significant digit
  * in the IDI is zero."
  */
-
 const AFI_INFO_2: Map<number, X213NetworkAddressInfo> = new Map([
     [34, {
         network_type: "iana_icp",
@@ -640,9 +655,10 @@ const AFI_INFO_2: Map<number, X213NetworkAddressInfo> = new Map([
 ]);
 
 /**
- * Get information about the NSAP syntax and network type by AFI
- *
- * Returns `None` if the AFI is unrecognized.
+ * @summary Get information about the NSAP syntax and network type by AFI
+ * @param afi The AFI to get the network address schema for.
+ * @returns the network address schema, or `undefined` if the AFI is unrecognized.
+ * @function
  */
 export function get_nsap_address_schema(afi: AFI): X213NetworkAddressInfo | undefined {
     const normalized = group_afi_to_individual_afi(afi);
@@ -653,7 +669,12 @@ export function get_nsap_address_schema(afi: AFI): X213NetworkAddressInfo | unde
     return AFI_INFO_2.get(afi_bin);
 }
 
-/** Return get the N-address network type from the AFI */
+/**
+ * @summary Get the NSAP network type from the AFI
+ * @param afi The AFI to get the network type from.
+ * @returns the network type, or `undefined` if the AFI is unrecognized.
+ * @function
+ */
 export function afi_to_network_type(afi: AFI): X213NetworkAddressType | undefined {
     return get_nsap_address_schema(afi)?.network_type;
 }

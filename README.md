@@ -35,7 +35,14 @@ displayed (namely, the `IP6` syntax).
 
 Unit test coverage is close to 100% of all lines and functions, and about 70%
 of branches. Some of the branches not tested are trivial error handling
-branches or even thought to be unreachable.
+branches or even thought to be unreachable. This module is written in
+Typescript with the strictest settings.
+
+This module is ESM-only. I will not publish a CommonJS version. Please consider
+migrating to using ESM if you are not.
+
+I believe this module will work on all Javascript runtimes. It does not even
+depend on `Buffer` (the tests, do, though).
 
 ## Usage
 

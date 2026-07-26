@@ -11,10 +11,10 @@ export {
     X213NetworkAddress,
 } from "./types.mjs";
 export type {
-    NAddressParseError,
-    RFC1278ParseError,
+    NSAPAddressParseError as RFC1278ParseError,
 } from "./error.mjs";
 export {
     local_iso_iec_646_byte_to_char,
     char_to_local_iso_iec_646_byte,
 } from "./isoiec646.mjs";
+export { type ParseResult } from "./parse.mjs";

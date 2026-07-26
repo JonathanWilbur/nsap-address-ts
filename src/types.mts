@@ -1,11 +1,23 @@
 import { parse_nsap } from "./parse.mjs";
-import type { RFC1278ParseError } from "./error.mjs";
-import { AFI_IANA_ICP_BIN, afi_to_network_type, AFI_URL, DEFAULT_ITOT_TRANSPORT_SET, get_nsap_address_schema, ITOT_OVER_IPV4_DEFAULT_PORT, RFC_1277_PREFIX, type X213NetworkAddressInfo } from "./data.mjs";
+import type { NSAPAddressParseError } from "./error.mjs";
+import {
+    AFI_IANA_ICP_BIN,
+    afi_to_network_type,
+    AFI_URL,
+    DEFAULT_ITOT_TRANSPORT_SET,
+    get_nsap_address_schema,
+    ITOT_OVER_IPV4_DEFAULT_PORT,
+    RFC_1277_PREFIX,
+    type X213NetworkAddressInfo,
+} from "./data.mjs";
 import { BCDBuffer } from "./bcd.mjs";
 import { u16_to_decimal_bytes, u8_to_decimal_bytes, uint8ArrayCompare } from "./utils.mjs";
 import { fmt_naddr } from "./display.mjs";
 
+/** IPv4 address */
 export type Ipv4Address = [number, number, number, number];
+
+/** IPv6 address */
 export type Ipv6Address = [
     number, number, number, number,
     number, number, number, number,
@@ -36,25 +48,40 @@ export type NetworkSocketId = number;
 /** Socket information, per IETF RFC 1277 */
 export type Rfc1277SocketInfo = [Rfc1277NetworkId, Ipv4Address, NetworkSocketId, Rfc1277TransportSet];
 
-// TODO: Move variant docs to the type definition.
-/** X.213 NSAP Domain-Specific Part Syntax */
+/**
+ * X.213 NSAP Domain-Specific Part Syntax
+ * 
+ * The syntaxes are:
+ * 
+ * - `decimal`: Binary-Coded Decimal (BCD) with 0b1111 used as padding to
+ *   produce an integral number of octets
+ * - `binary`: Opaque binary encoding
+ * - `iso646`: ISO/IEC 646 characters, which is basically ASCII
+ * - `national`: Characters from a national character set
+ */
 export type DSPSyntax =
-    /**
-     * Binary-Coded Decimal (BCD) with 0b1111 used as padding to produce an
-     * integral number of octets
-     */
     | "decimal"
-    /** Opaque binary encoding */
     | "binary"
-    /** ISO/IEC 646 characters, which is basically ASCII */
     | "iso646"
-    /** Characters from a national character set */
     | "national"
     ;
 
-
-// TODO: Move variant docs to the type definition.
-/** X.213 NSAP network address type */
+/**
+ * X.213 NSAP network address type
+ * 
+ * The types are:
+ * 
+ * - `x121`: ITU-T Recommendation X.121 address for use in X.25 Networks
+ * - `iso_dcc`: ISO Data Country Code (DCC)
+ * - `f69`: ITU-T Recommendation F.69 address for use in Telex
+ * - `e163`: ITU-T Recommendation E.163 address for use in the PSTN
+ * - `e164`: ITU-T Recommendation E.164 address for use in the ISDN
+ * - `iso_6523_icd`: ISO/IEC 6523-1 International Code Designator (ICD)
+ * - `iana_icp`: IANA Internet Code Point (ICP)
+ * - `itu_t_ind`: ITU-T International Network Designator (IND)
+ * - `local`: Locally-assigned DSP
+ * - `url`: URL, a syntax defined in ITU-T Rec. X.519
+ */
 export type X213NetworkAddressType =
     /**
      * IDI based on ITU-T Recommendation X.121 address for use in X.25 Networks
@@ -67,7 +94,8 @@ export type X213NetworkAddressType =
      * > identifies an authority responsible for allocating and assigning
      * > values of the DSP.
      *
-     * See: <https://www.itu.int/rec/T-REC-X.121-200010-I/en>
+     * See [ITU-T Rec. X.121](https://www.itu.int/rec/T-REC-X.121-200010-I/en) for more
+     * information.
      */
     | "x121"
     /**
@@ -81,7 +109,7 @@ export type X213NetworkAddressType =
      * been assigned, or by an organization designated by the holder of the
      * ISO DCC value to carry out this responsibility.
      *
-     * See: <https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes>
+     * See [List of ISO 3166 country codes](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes) on Wikipedia.
      */
     | "iso_dcc"
     /**
@@ -98,7 +126,8 @@ export type X213NetworkAddressType =
      * for IP networking within NSAP addressing: `00728722`. Its usage is
      * described in IETF RFC
      *
-     * See: <https://www.itu.int/rec/T-REC-F.69-199406-I/en>
+     * See [ITU-T Rec. F.69](https://www.itu.int/rec/T-REC-F.69-199406-I/en) for more
+     * information.
      */
     | "f69"
     /**
@@ -107,7 +136,8 @@ export type X213NetworkAddressType =
      * This is a phone number. This network type was deprecated at or before
      * 2001 and you should use E.164 addressing instead.
      *
-     * See: <https://www.itu.int/rec/T-REC-E.163/en>
+     * See [ITU-T Rec. E.163](https://www.itu.int/rec/T-REC-E.163/en) for more
+     * information.
      */
     | "e163"
     /**
@@ -124,7 +154,8 @@ export type X213NetworkAddressType =
      * > identifies an authority responsible for allocating and assigning
      * > values of the DSP.
      *
-     * See: <https://www.itu.int/rec/T-REC-E.164/en>
+     * See [ITU-T Rec. E.164](https://www.itu.int/rec/T-REC-E.164/en) for more
+     * information.
      */
     | "e164"
     /** IDI is an assigned ISO/IEC 6523-1 International Code Designator (ICD) */
@@ -136,7 +167,8 @@ export type X213NetworkAddressType =
      * padded with zeroes to be exactly 20 bytes in total, after the AFI and
      * IDI (which identifies the version).
      *
-     * See: <https://www.rfc-editor.org/rfc/rfc4548.html>
+     * See [IETF RFC 4548](https://www.rfc-editor.org/rfc/rfc4548.html) for more
+     * information.
      */
     | "iana_icp"
     /** International Network Designator (IND) */
@@ -146,7 +178,8 @@ export type X213NetworkAddressType =
     /**
      * Special URL encoding defined (without a name) in ITU-T Rec. X.519.
      *
-     * See: <https://www.itu.int/rec/T-REC-X.519>, Section 11.4
+     * See [ITU-T Rec. X.519](https://www.itu.int/rec/T-REC-X.519), Section 11.4
+     * for more information.
      */
     | "url"
     ;
@@ -192,12 +225,24 @@ export class X213NetworkAddress {
         this.bytes = bytes;
     }
 
-    // TODO: There is more to implement.
-
+    /**
+     * @summary Get the bytes of the NSAP address
+     * @returns The bytes of the NSAP address.
+     */
     public get_octets(): Uint8Array {
         return this.bytes;
     }
 
+    /**
+     * @summary Get the AFI of the NSAP address
+     * @description
+     * 
+     * This function simply returns the first byte of the encoded NSAP address.
+     * An NSAP address should never be zero-length, but this will return `-1`
+     * if this happens to be the case.
+     * 
+     * @returns The AFI of the NSAP address.
+     */
     public afi(): AFI {
         return this.bytes[0] ?? -1;
     }
@@ -213,11 +258,12 @@ export class X213NetworkAddress {
     }
 
     /**
-     * Iterate over the IDI digits for this NSAP address
-     *
-     * Returns `None` if the AFI is unrecognized, and therefore, that the
-     * NSAP address cannot be parsed, since the end of the IDI cannot be
-     * determined.
+     * @summary Iterate over the IDI digits for this NSAP address
+     * @yields Decimal digits: `number`s that can be between 0 and 9.
+     * @returns an iterator over the IDI digits, or `undefined` if the AFI is
+     *  unrecognized, and therefore, that the NSAP address cannot be parsed,
+     *  since the end of the IDI cannot be determined.
+     * @function
      */
     public idi_digits(): IterableIterator<number, void> | undefined {
         const addr_type_info = get_nsap_address_schema(this.afi());
@@ -240,11 +286,13 @@ export class X213NetworkAddress {
     }
 
     /**
-     * Iterate over the IDI digits for this NSAP address, if the DSP is in decimal
-     *
-     * Returns `None` if the AFI is unrecognized, and therefore, that the
-     * NSAP address cannot be parsed, since the end of the IDI cannot be
-     * determined. Also returns `None` if the DSP syntax is not decimal.
+     * @Summary Iterate over the DSP digits for this NSAP address, if the DSP is in decimal
+     * @yields Decimal digits: `number`s that can be between 0 and 9.
+     * @returns an iterator over the DSP digits, or `undefined` if the AFI is
+     *  unrecognized, and therefore, that the NSAP address cannot be parsed,
+     *  since the end of the IDI cannot be determined. Also returns `undefined`
+     *  if the DSP syntax is not decimal.
+     * @function
      */
     public dsp_digits(): IterableIterator<number, void> | undefined {
         const addr_type_info = get_nsap_address_schema(this.afi());
@@ -273,9 +321,15 @@ export class X213NetworkAddress {
     }
 
     /**
-     * Get the encoded URL
-     *
-     * This returns `None` if this NSAP does not encode a URL
+     * @summary Get the encoded URL
+     * @description
+     * 
+     * This function returns the URL encoded in the NSAP address, assuming the
+     * AFI is `0xFF`, as defined in ITU-T Rec. X.519.
+     * 
+     * @returns the URL as a `string`, or `undefined` if this NSAP does not
+     *  encode a URL
+     * @function
      */
     public get_url(): string | undefined {
         const octets = this.get_octets();
@@ -287,12 +341,17 @@ export class X213NetworkAddress {
     }
 
     /**
-     * Get the encoded IP address
+     * @summary Get the encoded IP address
+     * @description
      *
-     * This only returns an IP address for IANA ICP-based NSAP addresses
+     * This only returns an IP address for IANA Internet Code Point (ICP)-based
+     * NSAP addresses, and only if the IDI is either `0000` or `0001` (no other
+     * syntaxes are recognized).
+     * 
+     * See [IETF RFC 4548](https://www.rfc-editor.org/rfc/rfc4548.html).
      *
-     * This returns `None` if this NSAP does not encode an IP address
-     * See: <https://www.rfc-editor.org/rfc/rfc4548.html>
+     * @returns `undefined` if this NSAP does not encode an IP address
+     * @function
      */
     public get_ip(): Ipv4Address | Ipv6Address | undefined {
         const octets = this.get_octets();
@@ -317,13 +376,17 @@ export class X213NetworkAddress {
     }
 
     /**
-     * Get the RFC 1277 socket address info
-     *
-     * Specifically, if this returns `Some(_)`, it contains a tuple of the
-     * IP network, the socket address, and optionally, the transport-set, as
-     * defined in IETF RFC 1277, in that order.
-     *
-     * This returns `None` if this NSAP does not encode an ITOT socket address
+     * @summary Get the RFC 1277 socket address info
+     * @description
+     * 
+     * If this is an NSAP of the syntax defined in
+     * [IETF RFC 1277](https://datatracker.ietf.org/doc/html/rfc1277),
+     * this function returns, it deconstructs it into parts and returns it
+     * as a tuple.
+     * 
+     * @returns a tuple of `[network, ip_address, port, transport_set]`
+     *  or `undefined` if this NSAP does not encode an ITOT socket address.
+     * @function
      */
     public get_rfc1277_socket(): Rfc1277SocketInfo | undefined {
         const octets = this.get_octets();
@@ -380,12 +443,31 @@ export class X213NetworkAddress {
         return [octets[5]!, ip, port, tset];
     }
 
-    public static fromString(str: string): X213NetworkAddress | RFC1278ParseError {
+    /**
+     * @summary Parse a string into an NSAP address
+     * @description
+     * 
+     * This function parses a string into an NSAP address according to the
+     * syntax defined in
+     * [IETF RFC 1278](https://datatracker.ietf.org/doc/html/rfc1278).
+     * 
+     * @param str The string to parse into an NSAP address.
+     * @returns The NSAP address, or an error if the string is not a valid NSAP
+     *  address.
+     * @function
+     */
+    public static fromString(str: string): X213NetworkAddress | NSAPAddressParseError {
         return parse_nsap(str);
     }
 
-    /** Create a new IANA ICP NSAP address from an IP address */
-    public static from_ip(ip: Ipv4Address | Ipv6Address): X213NetworkAddress | RFC1278ParseError {
+    /**
+     * @summary Create a new IANA ICP NSAP address from an IP address
+     * @param ip The IP address (either IPv4 or IPv6) to create an NSAP address from.
+     * @returns The NSAP address, or an error if the IP address is not a valid IP address.
+     * @static
+     * @function
+     */
+    public static from_ip(ip: Ipv4Address | Ipv6Address): X213NetworkAddress | NSAPAddressParseError {
         // IANA ICP NSAP addresses are always 20 bytes
         const out = new Uint8Array(20);
         out[0] = AFI_IANA_ICP_BIN;
@@ -395,17 +477,38 @@ export class X213NetworkAddress {
         return new X213NetworkAddress(out);
     }
 
-    /** Create a new IANA ICP NSAP address from an IPv4 address */
-    public static from_ipv4(ip: Ipv4Address): X213NetworkAddress | RFC1278ParseError {
+    /**
+     * Create a new IANA ICP NSAP address from an IPv4 address
+     * @param ip The IPv4 address to create an NSAP address from.
+     * @returns The NSAP address, or an error if the IP address is not a valid IP address.
+     * @static
+     * @function
+     */
+    public static from_ipv4(ip: Ipv4Address): X213NetworkAddress | NSAPAddressParseError {
         return X213NetworkAddress.from_ip(ip);
     }
 
-    /** Create a new IANA ICP NSAP address from an IPv6 address */
-    public static from_ipv6(ip: Ipv6Address): X213NetworkAddress | RFC1278ParseError {
+    /**
+     * Create a new IANA ICP NSAP address from an IPv6 address
+     * @param ip The IPv6 address to create an NSAP address from.
+     * @returns The NSAP address, or an error if the IP address is not a valid IP address.
+     * @static
+     * @function
+     */
+    public static from_ipv6(ip: Ipv6Address): X213NetworkAddress | NSAPAddressParseError {
         return X213NetworkAddress.from_ip(ip);
     }
 
-    private static from_url(url: string, idi_byte_2: number): X213NetworkAddress | RFC1278ParseError {
+    /**
+     * Create a new NSAP address from a URL
+     * @param url The URL to create an NSAP address from.
+     * @param idi_byte_2 The second byte of the IDI.
+     * @returns The NSAP address, or an error if the URL is not a valid URL.
+     * @static
+     * @function
+     * @private
+     */
+    private static from_url(url: string, idi_byte_2: number): X213NetworkAddress | NSAPAddressParseError {
         const urlBytes = new TextEncoder().encode(url);
         const out = new Uint8Array(3 + urlBytes.length);
         out[0] = AFI_URL;
@@ -415,20 +518,42 @@ export class X213NetworkAddress {
         return new X213NetworkAddress(out);
     }
 
-    /** Create a new X.519 ITOT URL NSAP address from a URL */
-    public static from_itot_url(url: string): X213NetworkAddress | RFC1278ParseError {
+    /**
+     * @summary Create a new X.519 ITOT URL NSAP address from a URL
+     * @param url The URL to create an NSAP address from.
+     * @returns The NSAP address, or an error if the URL is not a valid URL.
+     * @static
+     * @function
+     */
+    public static from_itot_url(url: string): X213NetworkAddress | NSAPAddressParseError {
         return X213NetworkAddress.from_url(url, 0);
     }
 
-    /** Create a new X.519 Non-OSI (LDAP, IDM, etc.) URL NSAP address from a URL */
-    public static from_non_osi_url(url: string): X213NetworkAddress | RFC1278ParseError {
+    /**
+     * @summary Create a new X.519 Non-OSI (LDAP, IDM, etc.) URL NSAP address from a URL
+     * @param url The URL to create an NSAP address from.
+     * @returns The NSAP address, or an error if the URL is not a valid URL.
+     * @static
+     * @function
+     */
+    public static from_non_osi_url(url: string): X213NetworkAddress | NSAPAddressParseError {
         return X213NetworkAddress.from_url(url, 1);
     }
 
     /**
-     * Create an ITOT NSAP address from a socket address and optional transport set
+     * @summary Create an ITOT NSAP address from a socket address and optional transport set
+     * @description
      *
-     * Note that this only supports IPv4 due to the encoding.
+     * Note that this only supports IPv4 due to the defined syntax; IPv6 is not
+     * supported.
+     *
+     * @param network The network number.
+     * @param ip The IPv4 address.
+     * @param port The port number.
+     * @param tset The transport set number, which is optional
+     * @returns The NSAP address, or an error if the socket address is not a valid socket address.
+     * @static
+     * @function
      */
     public static from_socket_addr_v4(
         network: number,
@@ -468,7 +593,8 @@ export class X213NetworkAddress {
     }
 
     /**
-     * Convert to a `String` using the `NS+<hex>` syntax
+     * @summary Convert to a `String` using the `NS+<hex>` syntax
+     * @description
      *
      * This is desirable for portability / interoperability: the `NS+<hex>`
      * syntax is the easiest display syntax to parse and leaves no ambiguity of
@@ -476,6 +602,9 @@ export class X213NetworkAddress {
      * string format for use in other systems.
      *
      * The output looks like `NS+A433BB93C1`.
+     * 
+     * @returns The NSAP address as a string.
+     * @function
      */
     public to_ns_string(): string {
         const hex = Array.from(this.get_octets())
@@ -485,12 +614,55 @@ export class X213NetworkAddress {
         return `NS+${hex}`;
     }
 
-    // TODO: JSDoc
+    /**
+     * @summary Convert an NSAP address to a string that mostly adheres to IETF RFC 1278
+     * @description
+     * 
+     * This function converts an NSAP address to a string that is mostly
+     * compliant with
+     * [IETF RFC 1278](https://datatracker.ietf.org/doc/html/rfc1278).
+     * 
+     * It is not compliant by having some modernized syntaxes for
+     * representing IANA Internet Code Point (ICP) addresses (which are IP
+     * addresses), for URLs, which are defined in ITU-T Rec. X.519, and
+     * for a few other things. If you need a fully-compliant string,
+     * use {@link toRfc1278String} instead.
+     * 
+     * @returns A string representation of the NSAP address.
+     */
     public toString(): string {
         return fmt_naddr(this, false);
     }
 
-    // TODO: isEqualTo() (this can be trivial)
+    /**
+     * @summary Convert an NSAP address to a string that adheres to IETF RFC 1278
+     * @description
+     * 
+     * This function converts an NSAP address to a string that is fully
+     * compliant with
+     * [IETF RFC 1278](https://datatracker.ietf.org/doc/html/rfc1278).
+     * 
+     * If you can tolerate some non-standard syntaxes that are much more
+     * modern and user-friendly, use {@link toString} instead.
+     * 
+     * @returns A string representation of the NSAP address.
+     */
+    public toRfc1278String(): string {
+        return fmt_naddr(this, true);
+    }
+
+    /**
+     * @summary Check if this NSAP address is equal to another NSAP address
+     * @description
+     * 
+     * This function checks if this NSAP address is equal to another NSAP address.
+     * 
+     * @param other The other NSAP address to compare to.
+     * @returns `true` if the NSAP addresses are equal, `false` otherwise.
+     */
+    public isEqualto(other: X213NetworkAddress): boolean {
+        return uint8ArrayCompare(this.get_octets(), other.get_octets());
+    }
 }
 
 export default X213NetworkAddress;

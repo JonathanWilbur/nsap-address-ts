@@ -30,9 +30,19 @@ export function u16_to_decimal_bytes(n: number): Uint8Array {
     ]);
 }
 
-// TODO: JSDoc
-// It is absolutely fucking inexcusable that JavaScript does not have a built-in for this.
-// Just when I think Javascript is actually a decent language, I am reminded of things like this.
+/**
+ * @summary Compare two Uint8Arrays
+ * @description
+ * 
+ * It is absolutely fucking inexcusable that JavaScript does not have a
+ * built-in for this. Just when I think Javascript is actually a decent
+ * language, I am reminded of things like this.
+ * 
+ * @param a The first Uint8Array to compare.
+ * @param b The second Uint8Array to compare.
+ * @returns `true` if the two Uint8Arrays are equal, `false` otherwise.
+ * @function
+ */
 export function uint8ArrayCompare(
     a: Uint8Array,
     b: Uint8Array

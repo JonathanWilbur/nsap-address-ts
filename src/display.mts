@@ -69,8 +69,16 @@ export function ipv4_from_slice(bytes: Uint8Array): Ipv4Address | undefined {
     return [oct1, oct2, oct3, oct4];
 }
 
-// TODO: JSDoc
-// TODO: Expose only_standard flag
+/**
+ * @summary Convert an NSAP address to a string
+ * @description
+ * 
+ * This function converts an NSAP address to a string.
+ * 
+ * @param naddr The NSAP address to convert.
+ * @param only_standard Whether to only use syntaxes defined in IETF RFC 1278.
+ * @returns A string representation of the NSAP address.
+ */
 export function fmt_naddr(
     naddr: X213NetworkAddress,
     only_standard: boolean = false,
@@ -82,7 +90,6 @@ export function fmt_naddr(
             && typeof naddr.bytes[1] === "number"
             && typeof naddr.bytes[2] === "number"
         ) {
-            // FIXME: Actually... should you encode the IDI as hex?
             const idihex1 = naddr.bytes[1].toString(16).toUpperCase().padStart(2, '0');
             const idihex2 = naddr.bytes[2].toString(16).toUpperCase().padStart(2, '0');
             return `URL+${idihex1}${idihex2}+${url}`;

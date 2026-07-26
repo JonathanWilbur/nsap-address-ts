@@ -1,21 +1,8 @@
 // TODO: Some of these variants are no longer used. Find out why.
 // TODO: Move variant docs to the type definition.
 
-/** An error parsing an NSAP address from bytes */
-export type NAddressParseError =
-    /** The NSAP address was too short / truncated */
-    | "too_short"
-    /** The NSAP address was too long */
-    | "too_long"
-    /** The DSP was malformed */
-    | "malformed_dsp"
-    /** The IDI contained non-digits */
-    | "non_digits_in_idi"
-    // TODO: Add more variants here and to the rust version.
-    ;
-
 /** Error representing an issue parsing an IETF RFC 1278 NSAP address string */
-export type RFC1278ParseError =
+export type NSAPAddressParseError =
     /** A malformed IETF RFC 1278 string */
     | "malformed"
     /** An unrecognized--but possibly valid--syntax */

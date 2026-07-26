@@ -8,14 +8,6 @@
  */
 
 /**
- * An ASCII digit (`0x30..=0x39`)
- *
- * This SHOULD BE an ASCII digit, but might not be. It is on the caller to
- * check this and determine what to do if this has a non-digit value.
- */
-export type ShouldBeASCIIDigit = number;
-
-/**
  * Buffer for writing Binary-Coded Decimal (BCD)
  *
  * Binary-Coded Decimal (BCD) is extensively used by X.213 NSAP addresses. It
@@ -140,14 +132,26 @@ export class BCDBuffer {
     //     return [0, max_digits];
     // }
 
-    // TODO: JSDoc
+    // FIXME: The Rust type is ShouldBeASCIIDigit, but I don't think that is accurate.
+    /**
+     * @summary Iterate over the digits in the BCD buffer.
+     * @param least_sig_nybble Whether to start with the least significant
+     *  nybble of the first byte instead of the most significant nybble.
+     * @param leading_0_sig Whether to treat a leading 0 as a significant
+     *  digit, if `true`, we skip over leading 0x1 nybbles.
+     * @param ignore_last_nybble Whether to ignore the last nybble
+     * @param processing_leading_digits Whether to process leading digits;
+     *  if `false`, we assume there are no leading digits in the buffer.
+     * @returns An iterator over the digits, as ASCII code points.
+     * @function
+     */
     public *iter_digits(
         least_sig_nybble: boolean = false,
         leading_0_sig: boolean = true,
         ignore_last_nybble: boolean = false,
         // TODO: Review. This is set to false in the Rust equivalent.
         processing_leading_digits: boolean = true,
-    ): IterableIterator<ShouldBeASCIIDigit, void>  {
+    ): IterableIterator<number, void>  {
         const leading_digit: number = leading_0_sig ? 1 : 0;
         const len = this.len_in_bytes();
         let i = 0;
@@ -171,6 +175,7 @@ export class BCDBuffer {
             }
             // If the last nybble is 0b1111, it is padding.
             if ((nybble === 0b1111) || ignore_last_nybble) {
+                // FIXME: ignore_last_nybble is not handled correctly.
                 return;
             }
             yield nybble;
