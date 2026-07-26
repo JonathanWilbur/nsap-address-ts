@@ -663,9 +663,6 @@ const AFI_INFO_2: Map<number, X213NetworkAddressInfo> = new Map([
 export function get_nsap_address_schema(afi: AFI): X213NetworkAddressInfo | undefined {
     const normalized = group_afi_to_individual_afi(afi);
     const afi_bin = (((normalized & 0xF0) >> 4) * 10) + (normalized & 0x0F);
-    if (afi_bin < 34 || afi_bin > 77) {
-        return undefined;
-    }
     return AFI_INFO_2.get(afi_bin);
 }
 
