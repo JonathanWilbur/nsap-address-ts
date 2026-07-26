@@ -277,7 +277,13 @@ function parse_ipv4(ip: string): Ipv4Address | null {
     if (parts.length !== 4) {
         return null;
     }
-    return parts.map((part) => Number.parseInt(part, 10)) as Ipv4Address;
+    const numbers = parts.map((part) => Number.parseInt(part, 10));
+    for (const num of numbers) {
+        if (Number.isNaN(num) || num < 0 || num > 255) {
+            return null;
+        }
+    }
+    return numbers as Ipv4Address;
 }
 
 // "RFC-1006" "+" <prefix> "+" <ip> [ "+" <port> [ "+" <tset> ]]

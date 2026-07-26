@@ -47,6 +47,10 @@
     ".": {
         "import": "./dist/index.mjs",
         "types": "./dist/index.d.mts"
+    },
+    "./data": {
+      "import": "./dist/data.mjs",
+      "types": "./dist/data.d.mts"
     }
   }
 }

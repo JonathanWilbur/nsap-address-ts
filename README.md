@@ -61,10 +61,8 @@ counts as "not written by AI" overall.
 ## To Do (Now)
 
 - [ ] Formatting
-- [ ] `index.mts`
-- [ ] Make `fromHex` return `null` on error?
+- [x] `index.mts`
 - [ ] Convert Rust documentation comments to JSDoc
-- [ ] Make IPv4 or IPv6 a `Uint8Array`
 
 ## To Do (Future)
 

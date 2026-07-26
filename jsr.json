@@ -3,13 +3,13 @@
     "version": "0.1.0",
     "license": "MIT",
     "exports": {
-        ".": "./src/index.mts"
+        ".": "./src/index.mts",
+        "./data": "./src/data.mts"
     },
     "publish": {
         "include": [
             "LICENSE.txt",
             "README.md",
-            "doc/**/*.md",
             "src/**/*.mts"
         ]
     }
