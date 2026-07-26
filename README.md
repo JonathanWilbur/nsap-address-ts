@@ -1,5 +1,7 @@
 # X.213 NSAP Library
 
+[![JSR](https://jsr.io/badges/@wildboar/nsap-address)](https://jsr.io/@wildboar/nsap-address)
+
 ITU-T Recommendation X.213 Network Service Access Point (NSAP) address parsing
 and printing. These address types were designed for use in OSI networking, but
 have full compatibility with IP networking. Since OSI networking is ancient

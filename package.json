@@ -1,7 +1,7 @@
 {
   "name": "nsap-address",
   "description": "ITU-T Rec. X.213 Network Service Access Point (NSAP) address parsing and printing",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": {
     "name": "Jonathan M. Wilbur",
     "email": "jonathan@wilbur.space",
@@ -9,9 +9,9 @@
   },
   "contributors": [
     {
-        "email": "jonathan@wilbur.space",
-        "name": "Jonathan M. Wilbur",
-        "url": "https://github.com/JonathanWilbur"
+      "email": "jonathan@wilbur.space",
+      "name": "Jonathan M. Wilbur",
+      "url": "https://github.com/JonathanWilbur"
     }
   ],
   "type": "module",
@@ -35,9 +35,6 @@
     "x213",
     "itu"
   ],
-  "devDependencies": {
-    "@types/node": "^26.1.1"
-  },
   "scripts": {
     "build": "tsc",
     "node-test": "node --test test/*.spec.mjs",
@@ -47,12 +44,15 @@
   },
   "exports": {
     ".": {
-        "import": "./dist/index.mjs",
-        "types": "./dist/index.d.mts"
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.mts"
     },
     "./data": {
       "import": "./dist/data.mjs",
       "types": "./dist/data.d.mts"
     }
+  },
+  "devDependencies": {
+    "typescript": "^7.0.2"
   }
 }
